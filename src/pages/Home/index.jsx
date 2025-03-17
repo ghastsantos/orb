@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Container, Brand, Menu, Search, Content, NewNote, Logo } from './styles';
+import { Container, Brand, Menu, Content, Logo } from './styles';
 import { Header } from '../../Components/Header';
 import { ButtonText } from '../../Components/ButtonText';
-import { FiPlus, FiSearch, FiMenu } from 'react-icons/fi';
-import { Input } from '../../Components/Input';
+import { FiHome, FiMenu, FiMessageSquare, FiUser, FiSmile, FiInfo, FiBell, FiLogOut } from 'react-icons/fi';
 import { Section } from '../../Components/Section';
 import { Note } from '../../Components/Note';
 import logoImg from '../../assets/logo.png';
@@ -24,18 +23,17 @@ export function Home() {
                 </Logo>
             </Brand>
             <Header />
-            {isMenuOpen && (
-                <Menu>
-                    <li><ButtonText title="Todos" isActive /></li>
-                    <li><ButtonText title="React" /></li>
-                    <li><ButtonText title="Nodejs" /></li>
-                </Menu>
-            )}
-            <Search>
-                <Input placeholder="Pesquisar pelo título" icon={FiSearch} />
-            </Search>
+            <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
+                <li><ButtonText title="Home" icon={FiHome} isActive /></li>
+                <li><ButtonText title="Notícias"icon={FiInfo} /></li>
+                <li><ButtonText title="Eventos" icon={FiSmile} /></li>  
+                <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
+                <li><ButtonText title="Perfil" icon={FiUser}/></li>
+                <li><ButtonText title="Notificações" icon={FiBell}/></li> 
+                <li><ButtonText title="Sair" icon={FiLogOut}/></li>
+            </Menu>
             <Content>
-                <Section title="Minhas notas">
+                <Section title="Destaques">
                     <Note data={{
                         title: 'React',
                         tags: [

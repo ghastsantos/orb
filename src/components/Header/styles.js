@@ -28,6 +28,8 @@ export const Profile = styled.div`
         height: 56px;
         width: 56px;
         border-radius: 50%;
+        user-select: none;
+        cursor: pointer;
     }
 
     div {
@@ -55,4 +57,8 @@ export const Logout = styled.button`
     margin-left: 32px;
     font-size: 24px;
     color: ${({ theme }) => theme.COLORS.GRAY_100};
+
+    &:hover {
+        color: ${({ theme }) => theme.COLORS.ORANGE};
+    }
 `;

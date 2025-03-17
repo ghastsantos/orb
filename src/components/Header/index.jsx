@@ -1,5 +1,5 @@
 import { Container, Profile, Logout } from './styles';
-import { RiShutDownLine } from 'react-icons/ri';
+import { FiLogOut } from "react-icons/fi";
 
 export function Header(){
     return(
@@ -12,7 +12,7 @@ export function Header(){
                     <strong>Gastão</strong>
                 </div>
                 <Logout>
-                    <RiShutDownLine />
+                    <FiLogOut />
                 </Logout>
             </Profile>
         </Container>

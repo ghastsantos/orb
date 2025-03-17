@@ -4,8 +4,9 @@ import { Header } from '../../Components/Header';
 import { ButtonText } from '../../Components/ButtonText';
 import { FiHome, FiMenu, FiMessageSquare, FiUser, FiSmile, FiInfo, FiBell, FiLogOut } from 'react-icons/fi';
 import { Section } from '../../Components/Section';
-import { Note } from '../../Components/Note';
+import { News } from '../../Components/News';
 import logoImg from '../../assets/logo.png';
+import reactImage from '../../assets/logo.png';
 
 export function Home() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,14 +35,37 @@ export function Home() {
             </Menu>
             <Content>
                 <Section title="Destaques">
-                    <Note data={{
-                        title: 'React',
-                        tags: [
-                            { id: '1', name: 'react' },
-                            { id: '2', name: 'nodejs' }
-                        ]
-                    }}
-                    />
+                <News
+                    data={[
+                        {
+                            id: '1',
+                            title: 'React',
+                            image: reactImage,
+                            tags: [
+                                { id: '1', name: 'react' },
+                                { id: '2', name: 'javascript' },
+                            ],
+                        },
+                        {
+                            id: '2',
+                            title: 'Node.js',
+                            image: reactImage,
+                            tags: [
+                                { id: '1', name: 'nodejs' },
+                                { id: '2', name: 'backend' },
+                            ],
+                        },
+                        {
+                            id: '3',
+                            title: 'CSS Tricks',
+                            image: reactImage,
+                            tags: [
+                                { id: '1', name: 'css' },
+                                { id: '2', name: 'design' },
+                            ],
+                        },
+                    ]}
+                />
                 </Section>
             </Content>
         </Container>

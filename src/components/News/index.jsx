@@ -1,41 +1,33 @@
-import React, { memo } from 'react';
-import Slider from 'react-slick';
-import { Container, Image, Card } from './styles';
+import React, { useState } from 'react';
+import { Container, Image, Card, CarouselWrapper, Controls } from './styles';
 import { Tag } from '../Tag';
 
-export const News = memo(function News({ data }) {
+export function News({ data }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrev = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+    };
 
     if (!Array.isArray(data) || data.length === 0) {
         return <p>Nenhuma notícia disponível.</p>;
     }
-    
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: false,
-        draggable: false,
-        autoplay: false,
-        adaptiveHeight: true,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                },
-            },
-        ],
-    };
 
     return (
         <Container>
-            <Slider {...settings}>
+            <CarouselWrapper style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                 {data.map((newsItem) => (
                     <Card key={newsItem.id}>
                         <Image>
-                            <img src={newsItem.image} alt={`Imagem de ${newsItem.title}`} />
+                            <img
+                                src={newsItem.image || 'https://via.placeholder.com/300x180'}
+                                alt={`Imagem de ${newsItem.title}`}
+                                onError={(e) => (e.target.src = 'https://via.placeholder.com/300x180')}
+                            />
                         </Image>
                         <h1>{newsItem.title}</h1>
                         {newsItem.tags && (
@@ -45,10 +37,13 @@ export const News = memo(function News({ data }) {
                                 ))}
                             </footer>
                         )}
-                        
                     </Card>
                 ))}
-            </Slider>
+            </CarouselWrapper>
+            <Controls>
+                <button onClick={handlePrev}>❮</button>
+                <button onClick={handleNext}>❯</button>
+            </Controls>
         </Container>
     );
-});
+}

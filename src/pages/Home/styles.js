@@ -3,22 +3,27 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     height: 100vh;
+    overflow: hidden;
     display: grid;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
-    overflow: hidden;
     transition: all 0.3s ease-in-out;
 
     &.menu-open {
         grid-template-columns: 250px auto;
-        grid-template-rows: 105px 128px auto 64px;
         grid-template-areas:
             'brand header'
-            'menu content'
+            'menu content';
+
+        @media (max-width: 768px) {
+            grid-template-areas:
+            'brand header'
+            'menu menu';
+        }
     }
 
     &.menu-closed {
         grid-template-columns: auto;
-        grid-template-rows: 105px auto 64px;
+        grid-template-rows: 105px auto 0px;
         grid-template-areas:
             'brand header'
             'content content'
@@ -36,6 +41,10 @@ export const Brand = styled.div`
     border-bottom-style: solid;
     border-bottom-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+
+    @media (max-width: 768px) {
+            height: 80px; /* Reduz o tamanho da logo */
+        }
 
     > h1 {
         font-size: 24px;
@@ -63,6 +72,10 @@ export const Logo = styled.div`
     img {
         height: 100px;
         user-select: none;
+
+        @media (max-width: 768px) {
+            height: 70px; /* Reduz o tamanho da logo */
+        }
     }
 `;
 
@@ -82,10 +95,22 @@ export const Menu = styled.ul`
         opacity: 1;
         visibility: visible;
         height: 100vh;
+
+        @media (max-width: 768px) {
+            width: 100%; /* O menu ocupa toda a largura no mobile */
+            height: calc(100vh - 80px); /* O menu ocupa toda a altura abaixo do header */
+            position: absolute; /* Garante que o menu fique sobre o conteúdo */
+            top: 80px; /* Alinha o menu logo abaixo do header */
+            left: 0;
+        }
     }
 
     > li {
         margin-bottom: 24px;
+
+        @media (max-width: 768px) {
+            margin-bottom: 16px; /* Reduz o espaçamento entre os itens no mobile */
+        }
     }
 `;
 
@@ -113,4 +138,10 @@ export const LogoutButton = styled.button`
 export const Content = styled.div`
     grid-area: content;
     padding: 0 64px;
+    overflow-y: auto;
+    transition: padding-bottom 0.3s ease-in-out;
+
+    &.menu-open {
+        padding-bottom: 8rem;
+    }
 `;

@@ -16,6 +16,18 @@ export const Container = styled.header`
 
     padding: 0 40px;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+
+    @media (max-width: 768px) {
+        height: 80px;
+        padding: 0 20px;
+        width: 250px;
+
+        &.menu-open {
+            width: 250px;
+            margin-left: -96px;
+        }
+
+    }
 `;
 
 
@@ -30,6 +42,11 @@ export const Profile = styled.div`
         border-radius: 50%;
         user-select: none;
         cursor: pointer;
+
+        @media (max-width: 768px) {
+            height: 40px; /* Reduz o tamanho da imagem */
+            width: 40px;
+        }
     }
 
     div {
@@ -41,11 +58,21 @@ export const Profile = styled.div`
         span {
             font-size: 14px;
             color: ${({ theme }) => theme.COLORS.GRAY_100};
+            user-select: none;
+
+            @media (max-width: 768px) {
+                font-size: 12px; /* Reduz o tamanho do texto */
+            }
         }
 
         strong {
             font-size: 18px;
             color: ${({ theme }) => theme.COLORS.WHITE};
+            user-select: none;
+
+            @media (max-width: 768px) {
+                font-size: 14px; 
+            }
         }
     }
 `;

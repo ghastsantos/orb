@@ -6,7 +6,8 @@ import { FiHome, FiMenu, FiMessageSquare, FiUser, FiSmile, FiInfo, FiBell, FiLog
 import { Section } from '../../Components/Section';
 import { News } from '../../Components/News';
 import logoImg from '../../assets/logo.png';
-import reactImage from '../../assets/logo.png';
+import reactImage from '../../assets/pucpr2.jpg';
+import { UsersCarousel } from '../../Components/UsersCarousel';
 
 export function Home() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,49 +24,100 @@ export function Home() {
                     <img src={logoImg} alt="Logo" />
                 </Logo>
             </Brand>
-            <Header />
+            <Header className={isMenuOpen ? 'menu-open' : 'menu-closed'} />
             <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <li><ButtonText title="Home" icon={FiHome} isActive /></li>
-                <li><ButtonText title="Notícias"icon={FiInfo} /></li>
-                <li><ButtonText title="Eventos" icon={FiSmile} /></li>  
+                <li><ButtonText title="Notícias" icon={FiInfo} /></li>
+                <li><ButtonText title="Eventos" icon={FiSmile} /></li>
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
-                <li><ButtonText title="Perfil" icon={FiUser}/></li>
-                <li><ButtonText title="Notificações" icon={FiBell}/></li> 
-                <li><ButtonText title="Sair" icon={FiLogOut}/></li>
+                <li><ButtonText title="Perfil" icon={FiUser} /></li>
+                <li><ButtonText title="Notificações" icon={FiBell} /></li>
+                <li><ButtonText title="Sair" icon={FiLogOut} /></li>
             </Menu>
-            <Content>
-                <Section title="Destaques">
-                <News
-                    data={[
-                        {
-                            id: '1',
-                            title: 'React',
-                            image: reactImage,
-                            tags: [
-                                { id: '1', name: 'react' },
-                                { id: '2', name: 'javascript' },
-                            ],
-                        },
-                        {
-                            id: '2',
-                            title: 'Node.js',
-                            image: reactImage,
-                            tags: [
-                                { id: '1', name: 'nodejs' },
-                                { id: '2', name: 'backend' },
-                            ],
-                        },
-                        {
-                            id: '3',
-                            title: 'CSS Tricks',
-                            image: reactImage,
-                            tags: [
-                                { id: '1', name: 'css' },
-                                { id: '2', name: 'design' },
-                            ],
-                        },
-                    ]}
-                />
+            <Content className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
+                <Section title="Destaques da semana">
+                    <News
+                        data={[
+                            {
+                                id: '1',
+                                title: 'Teste',
+                                image: reactImage,
+                                tags: [
+                                    { id: '1', name: 'eventos' },
+                                    { id: '2', name: 'pucpr' },
+                                ],
+                            },
+                            {
+                                id: '2',
+                                title: 'Teste 2',
+                                image: reactImage,
+                                tags: [
+                                    { id: '3', name: 'tecnologia' },
+                                    { id: '4', name: 'estudantes' },
+                                    { id: '2', name: 'pucpr' },
+                                ],
+                            },
+                            {
+                                id: '3',
+                                title: 'Teste 3',
+                                image: reactImage,
+                                tags: [
+                                    { id: '5', name: 'sistemas de informação' },
+                                    { id: '2', name: 'pucpr' },
+                                ],
+                            },
+                        ]}
+                    />
+                </Section>
+                <Section title="Conecte-se com outros estudantes!">
+                    <UsersCarousel
+                        data={[
+                            {
+                                id: '1',
+                                name: 'Gastão Santos',
+                                image: 'https://github.com/ghastsantos.png',
+                                tags: [
+                                    { id: '1', name: 'Admin' },
+                                    { id: '2', name: 'Sistemas de Informação' },
+                                ],
+                            },
+                            {
+                                id: '2',
+                                name: 'Caio Lamoglia',
+                                image: 'https://github.com/ghastsantos.png',
+                                tags: [
+                                    { id: '1', name: 'Admin' },
+                                    { id: '2', name: 'Sistemas de Informação' },
+                                ],
+                            },
+                            {
+                                id: '3',
+                                name: 'Matheus Saldanha',
+                                image: 'https://github.com/ghastsantos.png',
+                                tags: [
+                                    { id: '1', name: 'Admin' },
+                                    { id: '2', name: 'Sistemas de Informação' },
+                                ],
+                            },
+                            {
+                                id: '4',
+                                name: 'Davi Henrique',
+                                image: 'https://github.com/ghastsantos.png',
+                                tags: [
+                                    { id: '1', name: 'Admin' },
+                                    { id: '2', name: 'Sistemas de Informação' },
+                                ],
+                            },
+                            {
+                                id: '5',
+                                name: 'Bebezão',
+                                image: 'https://github.com/ghastsantos.png',
+                                tags: [
+                                    { id: '3', name: 'Direito' },
+                                ],
+                            },
+                        ]}
+                    />
                 </Section>
             </Content>
         </Container>

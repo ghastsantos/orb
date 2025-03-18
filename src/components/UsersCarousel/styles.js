@@ -4,25 +4,28 @@ export const Container = styled.div`
     width: 100%;
     overflow: hidden;
     position: relative;
+    margin-top: 32px;
 `;
 
 export const CarouselWrapper = styled.div`
     display: flex;
+    justify-content: center;
+    gap: 16px;
     transition: transform 0.5s ease-in-out;
-    width: 100%;
 `;
 
 export const Card = styled.div`
-    min-width: 100%; /* Cada card ocupa 100% da largura por padrão */
-    flex-shrink: 0;
+    flex: 0 0 calc(20% - 16px); /* 5 cards por vez em telas grandes */
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 16px;
 
     h1 {
-        font-size: 18px;
-        margin: 16px;
+        font-size: 16px;
+        margin-top: 8px;
         color: ${({ theme }) => theme.COLORS.TEXT};
     }
 
@@ -30,36 +33,30 @@ export const Card = styled.div`
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        padding: 16px;
+        justify-content: center;
+        margin-top: 8px;
     }
 
     @media (max-width: 768px) {
-        min-width: 90%; /* Reduz o tamanho do card no mobile */
-        margin: 0 auto; /* Centraliza o card */
+        flex: 0 0 calc(33.33% - 16px); /* 3 cards por vez no tablet */
     }
 
     @media (max-width: 480px) {
-        min-width: 100%; /* Ocupa toda a largura em telas muito pequenas */
+        flex: 0 0 calc(50% - 16px); /* 2 cards por vez no mobile */
     }
 `;
 
 export const Image = styled.div`
-    width: 100%;
-    height: 300px;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
     overflow: hidden;
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-        height: 200px; /* Reduz a altura da imagem no mobile */
-    }
-
-    @media (max-width: 480px) {
-        height: 150px; /* Reduz ainda mais em telas muito pequenas */
     }
 `;
 

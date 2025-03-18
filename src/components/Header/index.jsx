@@ -1,9 +1,9 @@
 import { Container, Profile, Logout } from './styles';
 import { FiLogOut } from "react-icons/fi";
 
-export function Header(){
+export function Header({className}){
     return(
-        <Container>
+        <Container className={className}>
             <Profile>
                 <img src="https://github.com/ghastsantos.png" alt="foto do usuário"/>
 

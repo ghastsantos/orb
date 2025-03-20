@@ -1,7 +1,7 @@
 import { Container, Profile, Logout } from './styles';
 import { FiLogOut } from "react-icons/fi";
 
-export function Header({className}){
+export function Header({className, onNavigate }){
     return(
         <Container className={className}>
             <Profile>
@@ -11,7 +11,7 @@ export function Header({className}){
                     <span>Bem-vindo</span>
                     <strong>Gastão</strong>
                 </div>
-                <Logout>
+                <Logout onClick={() => onNavigate('login')}>
                     <FiLogOut />
                 </Logout>
             </Profile>

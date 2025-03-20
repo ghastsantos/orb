@@ -4,7 +4,7 @@ export const Container = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+    background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
     color: ${({ theme }) => theme.COLORS.GRAY_300};
     margin-bottom: 8px;
     border-radius: 10px;
@@ -20,6 +20,10 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.WHITE};
         background: transparent;
         border: 0;
+
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
         
         &:placeholder{
             color: ${({ theme }) => theme.COLORS.GRAY_300};

@@ -9,7 +9,7 @@ import logoImg from '../../assets/logo.png';
 import reactImage from '../../assets/pucpr2.jpg';
 import { UsersCarousel } from '../../Components/UsersCarousel';
 
-export function Home() {
+export function Home({ onNavigate }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -24,7 +24,7 @@ export function Home() {
                     <img src={logoImg} alt="Logo" />
                 </Logo>
             </Brand>
-            <Header className={isMenuOpen ? 'menu-open' : 'menu-closed'} />
+            <Header onNavigate={onNavigate} className={isMenuOpen ? 'menu-open' : 'menu-closed'} />
             <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <li><ButtonText title="Home" icon={FiHome} isActive /></li>
                 <li><ButtonText title="Notícias" icon={FiInfo} /></li>
@@ -32,7 +32,7 @@ export function Home() {
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
                 <li><ButtonText title="Perfil" icon={FiUser} /></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
-                <li><ButtonText title="Sair" icon={FiLogOut} /></li>
+                <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
             <Content className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <Section title="Destaques da semana">

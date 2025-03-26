@@ -13,7 +13,7 @@ export const CarouselWrapper = styled.div`
 `;
 
 export const Card = styled.div`
-    min-width: 100%; /* Cada card ocupa 100% da largura por padrão */
+    min-width: 100%; 
     flex-shrink: 0;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     border-radius: 8px;
@@ -34,12 +34,12 @@ export const Card = styled.div`
     }
 
     @media (max-width: 768px) {
-        min-width: 90%; /* Reduz o tamanho do card no mobile */
-        margin: 0 auto; /* Centraliza o card */
+        width: 100%; 
+        margin: 0 auto; 
     }
 
     @media (max-width: 480px) {
-        min-width: 100%; /* Ocupa toda a largura em telas muito pequenas */
+        width: 100%; 
     }
 `;
 
@@ -55,11 +55,11 @@ export const Image = styled.div`
     }
 
     @media (max-width: 768px) {
-        height: 200px; /* Reduz a altura da imagem no mobile */
+        height: 200px; 
     }
 
     @media (max-width: 480px) {
-        height: 150px; /* Reduz ainda mais em telas muito pequenas */
+        height: 150px; 
     }
 `;
 

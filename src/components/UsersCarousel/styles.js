@@ -15,7 +15,7 @@ export const CarouselWrapper = styled.div`
 `;
 
 export const Card = styled.div`
-    flex: 0 0 calc(20% - 16px); /* 5 cards por vez em telas grandes */
+    flex: 0 0 calc(33% - 16px);
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     border-radius: 8px;
     overflow: hidden;
@@ -38,11 +38,11 @@ export const Card = styled.div`
     }
 
     @media (max-width: 768px) {
-        flex: 0 0 calc(33.33% - 16px); /* 3 cards por vez no tablet */
+        flex: 0 0 calc(33.33% - 16px);
     }
 
     @media (max-width: 480px) {
-        flex: 0 0 calc(50% - 16px); /* 2 cards por vez no mobile */
+        flex: 0 0 calc(50% - 16px);
     }
 `;
 

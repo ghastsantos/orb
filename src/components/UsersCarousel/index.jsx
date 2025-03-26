@@ -6,20 +6,20 @@ export function UsersCarousel({ data }) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handlePrev = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.ceil(data.length / 5) - 1 : prevIndex - 1));
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.ceil(data.length / 3) - 1 : prevIndex - 1));
     };
 
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === Math.ceil(data.length / 5) - 1 ? 0 : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === Math.ceil(data.length / 3) - 1 ? 0 : prevIndex + 1));
     };
 
     const getVisibleUsers = () => {
         if (window.innerWidth <= 480) {
-            return 2; // 2 usuários no mobile
+            return 2;
         } else if (window.innerWidth <= 768) {
-            return 3; // 3 usuários no tablet
+            return 3;
         }
-        return 5; // 5 usuários em telas grandes
+        return 3;
     };
 
 

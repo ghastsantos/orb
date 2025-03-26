@@ -14,11 +14,7 @@ export const Container = styled.div`
             'brand header'
             'menu content';
 
-<<<<<<< Updated upstream
-        @media (max-width: 768px) {
-=======
         @media (max-width: 767px) {
->>>>>>> Stashed changes
             grid-template-areas:
             'brand header'
             'menu menu';
@@ -46,13 +42,8 @@ export const Brand = styled.div`
     border-bottom-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
 
-<<<<<<< Updated upstream
-    @media (max-width: 768px) {
-            height: 80px; /* Reduz o tamanho da logo */
-=======
     @media (max-width: 767px) {
             height: 80px; 
->>>>>>> Stashed changes
         }
 
     > h1 {
@@ -82,13 +73,8 @@ export const Logo = styled.div`
         height: 100px;
         user-select: none;
 
-<<<<<<< Updated upstream
-        @media (max-width: 768px) {
-            height: 70px; /* Reduz o tamanho da logo */
-=======
         @media (max-width: 767px) {
             height: 70px; 
->>>>>>> Stashed changes
         }
     }
 `;
@@ -110,19 +96,11 @@ export const Menu = styled.ul`
         visibility: visible;
         height: 100vh;
 
-<<<<<<< Updated upstream
-        @media (max-width: 768px) {
-            width: 100%; /* O menu ocupa toda a largura no mobile */
-            height: calc(100vh - 80px); /* O menu ocupa toda a altura abaixo do header */
-            position: absolute; /* Garante que o menu fique sobre o conteúdo */
-            top: 80px; /* Alinha o menu logo abaixo do header */
-=======
         @media (max-width: 767px) {
             width: 100%; 
             height: calc(100vh - 80px);
             position: absolute; 
             top: 80px; 
->>>>>>> Stashed changes
             left: 0;
         }
     }
@@ -130,13 +108,8 @@ export const Menu = styled.ul`
     > li {
         margin-bottom: 24px;
 
-<<<<<<< Updated upstream
-        @media (max-width: 768px) {
-            margin-bottom: 16px; /* Reduz o espaçamento entre os itens no mobile */
-=======
         @media (max-width: 767px) {
             margin-bottom: 16px; 
->>>>>>> Stashed changes
         }
     }
 `;

@@ -11,11 +11,7 @@ export const Form = styled.form`
     padding: 0 136px;
 
     @media (max-width: 768px) {
-<<<<<<< Updated upstream
-        padding 0 70px 0 70px;
-=======
         padding: 0 70px;
->>>>>>> Stashed changes
     }
 
     display: flex;

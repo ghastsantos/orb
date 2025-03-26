@@ -7,15 +7,6 @@ export const Container = styled.div`
 `;
 
 export const Form = styled.form`
-<<<<<<< Updated upstream
-    padding: 0 136px;
-
-    @media (max-width: 768px) {
-        padding 0 70px 0 70px;
-    }
-    
-    height: 164vh;
-=======
     padding: 0 136px;    
     height: 164vh;
 
@@ -23,7 +14,6 @@ export const Form = styled.form`
         padding: 0 70px;   
         height: 116vh; 
     }
->>>>>>> Stashed changes
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -75,10 +75,7 @@ export function Home({ onNavigate }) {
                             {
                                 id: '1',
                                 name: 'Gastão Santos',
-<<<<<<< Updated upstream
-=======
                                 text: 'teste',
->>>>>>> Stashed changes
                                 image: 'https://github.com/ghastsantos.png',
                                 tags: [
                                     { id: '1', name: 'Admin' },
@@ -120,8 +117,6 @@ export function Home({ onNavigate }) {
                                     { id: '3', name: 'Direito' },
                                 ],
                             },
-<<<<<<< Updated upstream
-=======
                             {
                                 id: '6',
                                 name: 'Caetano Padoin',
@@ -145,7 +140,6 @@ export function Home({ onNavigate }) {
                                     { id: '2', name: 'Sistemas de Informação' },
                                 ],
                             },
->>>>>>> Stashed changes
                         ]}
                     />
                 </Section>

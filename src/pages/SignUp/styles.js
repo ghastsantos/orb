@@ -12,7 +12,6 @@ export const Form = styled.form`
 
     @media (max-width: 768px) {
         padding: 0 70px;   
-        height: 116vh; 
     }
     display: flex;
     flex-direction: column;

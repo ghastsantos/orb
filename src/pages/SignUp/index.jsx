@@ -28,7 +28,7 @@ export function SignUp({ onNavigate }) {
     
         if (!formData.name.trim()) {
             newErrors.name = 'O nome é obrigatório.';
-        } else if (!/^[a-zA-Z\s]{3,}$/.test(formData.name)) {
+        } else if (!/^[\p{L}\s]{3,}$/u.test(formData.name)) {
             newErrors.name = 'O nome deve ter pelo menos 3 caracteres e conter apenas letras.';
         }
     
@@ -40,12 +40,14 @@ export function SignUp({ onNavigate }) {
     
         if (!formData.course.trim()) {
             newErrors.course = 'Escolha um curso.';
+        } else if (!/^[\p{L}\s]{3,}$/u.test(formData.course)) {
+            newErrors.course = 'O nome do curso deve conter apenas letras e ter pelo menos 3 caracteres.';
         }
-
+        
         if (!formData.period.trim()) {
             newErrors.period = 'Escolha um período.';
-        }else if (!/^[a-zA-Z\s]$/.test(formData.period)) {
-            newErrors.period = 'O turno do curso deve conter apenas letras.';
+        } else if (!/^[\p{L}\s]{3,}$/u.test(formData.period)) {
+            newErrors.period = 'O turno do curso deve conter apenas letras e ter pelo menos 3 caracteres.';
         }
     
         if (!formData.birthdate.trim()) {

@@ -40,14 +40,38 @@ export function SignUp({ onNavigate }) {
     
         if (!formData.course.trim()) {
             newErrors.course = 'Escolha um curso.';
+<<<<<<< Updated upstream
+=======
+        }else if (!/^[a-zA-Z\s]$/.test(formData.course)) {
+            newErrors.course = 'O nome do curso deve conter apenas letras.';
+>>>>>>> Stashed changes
         }
 
         if (!formData.period.trim()) {
             newErrors.period = 'Escolha um período.';
+<<<<<<< Updated upstream
+=======
+        }else if (!/^[a-zA-Z\s]$/.test(formData.period)) {
+            newErrors.period = 'O turno do curso deve conter apenas letras.';
+>>>>>>> Stashed changes
         }
     
         if (!formData.birthdate.trim()) {
             newErrors.birthdate = 'Escolha uma data de nascimento.';
+<<<<<<< Updated upstream
+=======
+        } else {
+            const birthdate = new Date(formData.birthdate);
+            const today = new Date();
+            const age = today.getFullYear() - birthdate.getFullYear();
+            const isBirthdayPassed = 
+                today.getMonth() > birthdate.getMonth() || 
+                (today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate());
+        
+            if (age < 16 || (age === 16 && !isBirthdayPassed)) {
+                newErrors.birthdate = 'Você deve ter no mínimo 16 anos.';
+            }
+>>>>>>> Stashed changes
         }
     
         if (!formData.password.trim()) {
@@ -122,6 +146,12 @@ export function SignUp({ onNavigate }) {
                     <option value="Sistemas de Informação" />
                     <option value="Direito" />
                     <option value="Medicina" />
+<<<<<<< Updated upstream
+=======
+                    <option value="Engenharia de Software" />
+                    <option value="Odontologia" />
+                    <option value="Engenharia Química" />
+>>>>>>> Stashed changes
                 </datalist>
 
                 {errors.period && <span style={{ color: 'red', fontSize: '12px' }}>{errors.period}</span>}

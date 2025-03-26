@@ -17,7 +17,11 @@ export const Container = styled.header`
     padding: 0 40px;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
 
+<<<<<<< Updated upstream
     @media (max-width: 768px) {
+=======
+    @media (max-width: 767px) {
+>>>>>>> Stashed changes
         height: 80px;
         padding: 0 20px;
         width: 250px;
@@ -43,7 +47,11 @@ export const Profile = styled.div`
         user-select: none;
         cursor: pointer;
 
+<<<<<<< Updated upstream
         @media (max-width: 768px) {
+=======
+        @media (max-width: 767px) {
+>>>>>>> Stashed changes
             height: 40px; /* Reduz o tamanho da imagem */
             width: 40px;
         }
@@ -60,7 +68,11 @@ export const Profile = styled.div`
             color: ${({ theme }) => theme.COLORS.GRAY_100};
             user-select: none;
 
+<<<<<<< Updated upstream
             @media (max-width: 768px) {
+=======
+            @media (max-width: 767px) {
+>>>>>>> Stashed changes
                 font-size: 12px; /* Reduz o tamanho do texto */
             }
         }
@@ -70,7 +82,11 @@ export const Profile = styled.div`
             color: ${({ theme }) => theme.COLORS.WHITE};
             user-select: none;
 
+<<<<<<< Updated upstream
             @media (max-width: 768px) {
+=======
+            @media (max-width: 767px) {
+>>>>>>> Stashed changes
                 font-size: 14px; 
             }
         }

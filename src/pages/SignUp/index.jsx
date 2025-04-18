@@ -4,16 +4,17 @@ import { Input } from '../../components/Input';
 import { FiMail, FiLock, FiUser, FiBook, FiClock, FiCalendar } from 'react-icons/fi';
 import { Button } from '../../components/Button';
 import logoImg from '../../assets/logo.png';
+import axios from 'axios';
 
 export function SignUp({ onNavigate }) {
     const [formData, setFormData] = useState({
-        name: '',
+        nome: '',
         email: '',
-        course: '',
-        period: '',
-        birthdate: '',
-        password: '',
-        confirmPassword: '',
+        curso: '',
+        periodo: '',
+        dataNasc: '',
+        senha: '',
+        confirmasenha: '',
     });
 
     const [errors, setErrors] = useState({});
@@ -22,6 +23,8 @@ export function SignUp({ onNavigate }) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    
 
     const validateForm = () => {
         const newErrors = {};
@@ -82,13 +85,16 @@ export function SignUp({ onNavigate }) {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
-            console.log('Cadastro bem-sucedido:', formData);
-            onNavigate('home'); 
-        }
+       try {
+        await axios.post('http://localhost:3000/api/usuario', formData)
+        console.log('Usuário cadastrado com sucesso!');
+       } catch (error) {
+        console.log (error);
+        
+       }
     };
 
     return (
@@ -108,7 +114,7 @@ export function SignUp({ onNavigate }) {
                     placeholder="Nome"
                     type="text"
                     icon={FiUser}
-                    name="name"
+                    name="nome"
                     value={formData.name}
                     onChange={handleChange}
                 />
@@ -128,9 +134,9 @@ export function SignUp({ onNavigate }) {
                     placeholder="Escolha seu curso"
                     type="text"
                     icon={FiBook}
-                    name="course"
+                    name="curso"
                     list="courses"
-                    value={formData.course}
+                    value={formData.curso}
                     onChange={handleChange}
                 />
                 <datalist id="courses">
@@ -147,9 +153,9 @@ export function SignUp({ onNavigate }) {
                     placeholder="Turno"
                     type="text"
                     icon={FiClock}
-                    name="period"
+                    name="periodo"
                     list="turno"
-                    value={formData.period}
+                    value={formData.periodo}
                     onChange={handleChange}
                 />
                 <datalist id="turno">
@@ -163,8 +169,8 @@ export function SignUp({ onNavigate }) {
                     placeholder="Data de nascimento"
                     type="text"
                     icon={FiCalendar}
-                    name="birthdate"
-                    value={formData.birthdate}
+                    name="dataNasc"
+                    value={formData.dataNasc}
                     onChange={handleChange}
                     onFocus={(e) => (e.target.type = 'date')}
                     onBlur={(e) => (e.target.type = 'text')}
@@ -175,8 +181,8 @@ export function SignUp({ onNavigate }) {
                     placeholder="Senha"
                     type="password"
                     icon={FiLock}
-                    name="password"
-                    value={formData.password}
+                    name="senha"
+                    value={formData.senha}
                     onChange={handleChange}
                 /> 
 
@@ -194,7 +200,7 @@ export function SignUp({ onNavigate }) {
 
                 <a
                 onClick={() => {
-                    console.log('Navegando para login');
+                    handleSubmit();
                     onNavigate('login');
                 }}
                 >

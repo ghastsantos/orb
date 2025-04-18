@@ -11,7 +11,7 @@ export function SignUp({ onNavigate }) {
         nome: '',
         email: '',
         curso: '',
-        periodo: '',
+        turnoo: '',
         dataNasc: '',
         senha: '',
         confirmasenha: '',
@@ -29,7 +29,7 @@ export function SignUp({ onNavigate }) {
     const validateForm = () => {
         const newErrors = {};
     
-        if (!formData.name.trim()) {
+        if (!formData.nome.trim()) {
             newErrors.name = 'O nome é obrigatório.';
         } else if (!/^[\p{L}\s]{3,}$/u.test(formData.name)) {
             newErrors.name = 'O nome deve ter pelo menos 3 caracteres e conter apenas letras.';
@@ -41,19 +41,19 @@ export function SignUp({ onNavigate }) {
             newErrors.email = 'Digite um e-mail válido.';
         }
     
-        if (!formData.course.trim()) {
+        if (!formData.curso.trim()) {
             newErrors.course = 'Escolha um curso.';
         } else if (!/^[\p{L}\s]{3,}$/u.test(formData.course)) {
             newErrors.course = 'O nome do curso deve conter apenas letras e ter pelo menos 3 caracteres.';
         }
         
-        if (!formData.period.trim()) {
-            newErrors.period = 'Escolha um período.';
-        } else if (!/^[\p{L}\s]{3,}$/u.test(formData.period)) {
-            newErrors.period = 'O turno do curso deve conter apenas letras e ter pelo menos 3 caracteres.';
+        if (!formData.turno.trim()) {
+            newErrors.turno = 'Escolha um período.';
+        } else if (!/^[\p{L}\s]{3,}$/u.test(formData.turno)) {
+            newErrors.turno = 'O turno do curso deve conter apenas letras e ter pelo menos 3 caracteres.';
         }
     
-        if (!formData.birthdate.trim()) {
+        if (!formData.dataNasc.trim()) {
             newErrors.birthdate = 'Escolha uma data de nascimento.';
         } else {
             const birthdate = new Date(formData.birthdate);
@@ -68,15 +68,16 @@ export function SignUp({ onNavigate }) {
             }
         }
     
-        if (!formData.password.trim()) {
+        if (!formData.senha.trim()) {
             newErrors.password = 'A senha é obrigatória.';
-        } else if (formData.password.length < 6) {
-            newErrors.password = 'A senha deve ter pelo menos 6 caracteres.';
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(formData.senha)) {
+            newErrors.password = 'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.';
+            
         }
     
-        if (!formData.confirmPassword.trim()) {
+        if (!formData.confirmasenha.trim()) {
             newErrors.confirmPassword = 'Confirme sua senha.';
-        } else if (formData.password !== formData.confirmPassword) {
+        } else if (formData.senha !== formData.confirmasenha) {
             newErrors.confirmPassword = 'As senhas não coincidem.';
         }
     
@@ -87,14 +88,19 @@ export function SignUp({ onNavigate }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const isValid = validateForm();
+        if (!isValid) {
+            return;
+        }
        try {
         await axios.post('http://localhost:3000/api/usuario', formData)
         console.log('Usuário cadastrado com sucesso!');
+        onNavigate('login');
        } catch (error) {
         console.log (error);
         
        }
+      
     };
 
     return (
@@ -148,14 +154,14 @@ export function SignUp({ onNavigate }) {
                     <option value="Engenharia Química" />
                 </datalist>
 
-                {errors.period && <span style={{ color: 'red', fontSize: '12px' }}>{errors.period}</span>}
+                {errors.turno && <span style={{ color: 'red', fontSize: '12px' }}>{errors.turno}</span>}
                 <Input
                     placeholder="Turno"
                     type="text"
                     icon={FiClock}
-                    name="periodo"
+                    name="turno"
                     list="turno"
-                    value={formData.periodo}
+                    value={formData.turno}
                     onChange={handleChange}
                 />
                 <datalist id="turno">
@@ -191,7 +197,7 @@ export function SignUp({ onNavigate }) {
                     placeholder="Confirme sua senha"
                     type="password"
                     icon={FiLock}
-                    name="confirmPassword"
+                    name="confirmasenha"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                 />

@@ -4,11 +4,12 @@ import { Input } from '../../components/Input';
 import { FiMail, FiLock} from 'react-icons/fi';
 import { Button } from '../../components/Button';
 import logoImg from '../../assets/logo.png';
+import axios from 'axios';
 
 export function SignIn({ onNavigate }) {
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
+        senha: '',
     });
 
     const [errors, setErrors] = useState({});
@@ -35,12 +36,16 @@ export function SignIn({ onNavigate }) {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
-            console.log('Login bem-sucedido:', formData);
-            onNavigate('home'); 
+        try {
+            await axios.post('http://localhost:3000/api/login', formData)
+            console.log("Login realizado com sucesso!")
+            onNavigate('home')
+        } catch (error) {
+            console.log(error)
+            
         }
     };
 
@@ -67,10 +72,10 @@ export function SignIn({ onNavigate }) {
                 {errors.password && <span style={{ color: 'red', fontSize: '12px' }}>{errors.password}</span>}
                 <Input
                     placeholder="Senha"
-                    type="password"
+                    type="text"
                     icon={FiLock}
-                    name="password"
-                    value={formData.password}
+                    name="senha"
+                    value={formData.senha}
                     onChange={handleChange}
                 />
 

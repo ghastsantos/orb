@@ -1,6 +1,102 @@
 import React from "react";
 
 export function Crud({ onNavigate}){
+    const [dados, setDados] = useState([]);
+    const [form, setForm] = useState({
+        nome: "",
+        email: "",
+        curso_id: "",
+        turno_id: "",
+        dataNasc: "",
+    });
+    const [editIndex, setEditIndex] = useState(null);
+    const [cursos, setCursos] = useState([]);
+    const [turnos, setTurnos] = useState([]);
+
+    useEffect(() => {
+        async function fetchDados() {
+            try {
+                const cursosRes = await axios.get("http://localhost:3000/api/cursos");
+                const turnosRes = await axios.get("http://localhost:3000/api/turnos");
+                const usuariosRes = await axios.get("http://localhost:3000/api/usuario");
+                setCursos(cursosRes.data);
+                setTurnos(turnosRes.data);
+                setDados(usuariosRes.data);
+            } catch (error) {
+                console.log("Erro ao buscar dados:", error);
+            }
+        }
+        fetchDados();
+    }, []);
+
+    const formatDate = (dateStr) => {
+        // Converte de 'YYYY-MM-DDTHH:mm:ss.sssZ' para 'YYYY-MM-DD'
+        return dateStr ? dateStr.split("T")[0] : "";
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const payload = {
+            ...form,
+            dataNasc: formatDate(form.dataNasc),
+        };
+
+        if (editIndex !== null) {
+            try {
+                const id = dados[editIndex].id;
+                await axios.put(`http://localhost:3000/api/usuario/${id}`, payload);
+                const novosDados = [...dados];
+                novosDados[editIndex] = { ...payload, id };
+                setDados(novosDados);
+                setEditIndex(null);
+            } catch (error) {
+                console.log("Erro ao atualizar usuário:", error);
+            }
+        } else {
+            try {
+                const res = await axios.post("http://localhost:3000/api/usuario", payload);
+                setDados([...dados, res.data]); // res.data deve conter o usuário com ID
+            } catch (error) {
+                console.log("Erro ao cadastrar usuário:", error);
+            }
+        }
+
+        setForm({
+            nome: "",
+            email: "",
+            curso_id: "",
+            turno_id: "",
+            dataNasc: "",
+        });
+    };
+
+    const handleEdit = (index) => {
+        const usuario = dados[index];
+        setForm({
+            nome: usuario.nome,
+            email: usuario.email,
+            curso_id: usuario.curso_id,
+            turno_id: usuario.turno_id,
+            dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
+        });
+        setEditIndex(index);
+    };
+
+    const handleDelete = async (index) => {
+        const id = dados[index].id;
+        try {
+            await axios.delete(`http://localhost:3000/api/usuario/${id}`);
+            const novosDados = dados.filter((_, i) => i !== index);
+            setDados(novosDados);
+        } catch (error) {
+            console.log("Erro ao excluir usuário:", error);
+        }
+    };
     return (
         <div className="p-4 max-w-xl mx-auto">
             <h1 className="text-2xl font-bold mb-4">CRUD de Usuários</h1>

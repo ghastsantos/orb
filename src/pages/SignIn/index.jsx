@@ -23,7 +23,7 @@ export function SignIn({ onNavigate }) {
         const newErrors = {};
 
         if (!formData.email.trim()) {
-            newErrors.email = 'O e-mail é obrigatório.';
+            newErrors.email = 'O email é obrigatório.';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'Digite um e-mail válido.';
         }

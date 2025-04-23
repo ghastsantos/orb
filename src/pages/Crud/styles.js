@@ -96,8 +96,8 @@ export const Table = styled.table`
         }
 
         &.delete {
-            background-color: ${({ theme }) => theme.COLORS.RED};
-            color: ${({ theme }) => theme.COLORS.WHITE};
+            background-color: ${({ theme }) => theme.COLORS.ORANGE};
+            color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
 
             &:hover {
                 background-color: ${({ theme }) => theme.COLORS.GRAY_100};

@@ -5,7 +5,6 @@ import { FiMail, FiLock, FiUser, FiBook, FiClock, FiCalendar } from 'react-icons
 import { Button } from '../../components/Button';
 import logoImg from '../../assets/logo.png';
 import axios from 'axios';
-import InputMask from 'react-input-mask';
 
 export function SignUp({ onNavigate }) {
     const [formData, setFormData] = useState({

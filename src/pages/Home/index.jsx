@@ -43,6 +43,7 @@ export function Home({ onNavigate }) {
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
                 <li><ButtonText title="Perfil" icon={FiUser} /></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
+                <li><ButtonText title="Crud" onClick={() => onNavigate('crud')}/></li>
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
             <Content className={isMenuOpen ? 'menu-open' : 'menu-closed'}>

@@ -6,6 +6,7 @@ import theme from './styles/theme';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import { Home } from './pages/Home';
+import { Crud } from './pages/Crud';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login');
@@ -40,6 +41,7 @@ function App() {
         <>
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
+            {currentPage === 'crud' && <Crud onNavigate={handleNavigation} usuario={usuario} />}
             {currentPage === 'home' && <Home onNavigate={handleNavigation} usuario={usuario} />}
         </>
     );

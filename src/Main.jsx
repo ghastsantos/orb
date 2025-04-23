@@ -21,8 +21,16 @@ function App() {
             setUsuario(JSON.parse(storedUsuario));
         }
     }, []);
-
-    const handleNavigation = (page, usuarioData = null) => {
+   
+    useEffect(() => {
+        if (usuario) {
+            sessionStorage.setItem('usuario', JSON.stringify(usuario));
+            sessionStorage.setItem('currentPage', currentPage);
+        }
+    }, [usuario, currentPage]);
+   
+   
+     const handleNavigation = (page, usuarioData = null) => {
         setCurrentPage(page);
         localStorage.setItem("currentPage", page);
 
@@ -41,7 +49,7 @@ function App() {
         <>
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
-            {currentPage === 'crud' && <Crud onNavigate={handleNavigation} usuario={usuario} />}
+            {currentPage === 'crud' && <Crud onNavigate={handleNavigation}/>}
             {currentPage === 'home' && <Home onNavigate={handleNavigation} usuario={usuario} />}
         </>
     );

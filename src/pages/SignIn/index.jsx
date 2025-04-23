@@ -13,6 +13,7 @@ export function SignIn({ onNavigate }) {
     });
 
     const [errors, setErrors] = useState({});
+    const [loginError, setLoginError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -55,8 +56,14 @@ export function SignIn({ onNavigate }) {
             const usuario = res.data;
             console.log('Usuário logado', usuario);
             onNavigate('home', usuario)
+            setLoginError('');
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            if (error.response && error.response.status === 401) {
+                setLoginError('E-mail ou senha incorretos.');
+            } else {
+                setLoginError('Erro ao fazer login. Tente novamente.');
+            }
         }
     };
 
@@ -89,7 +96,7 @@ export function SignIn({ onNavigate }) {
                     value={formData.senha}
                     onChange={handleChange}
                 />
-
+                {loginError && <span style={{ color: 'red', fontSize: '12px'}}>{loginError}</span>}
                 <Button title="Entrar" type="submit" />
 
                 <a href="#" onClick={() => onNavigate('signup')}>

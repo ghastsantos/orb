@@ -91,7 +91,8 @@ export const Table = styled.table`
             color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
 
             &:hover {
-                background-color: ${({ theme }) => theme.COLORS.GRAY_100};
+                background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+                color: ${({ theme }) => theme.COLORS.WHITE};
             }
         }
 
@@ -100,7 +101,8 @@ export const Table = styled.table`
             color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
 
             &:hover {
-                background-color: ${({ theme }) => theme.COLORS.GRAY_100};
+                background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+                color: ${({ theme }) => theme.COLORS.WHITE};
             }
         }
     }

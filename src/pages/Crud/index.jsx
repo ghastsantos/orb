@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { Container, Form, Table, BackButton } from './styles';
+import { useState, useEffect } from 'react';
 
 export function Crud({ onNavigate}){
     const [dados, setDados] = useState([]);

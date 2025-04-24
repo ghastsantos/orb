@@ -63,7 +63,20 @@ export function SignUp({ onNavigate }) {
 
         if (!formData.dataNasc.trim()) {
             newErrors.birthdate = 'Escolha uma data de nascimento.';
+        } else {
+            const [day, month, year] = formData.dataNasc.split('/');
+            const birthdate = new Date(`${year}-${month}-${day}`);
+            const today = new Date();
+            const age = today.getFullYear() - birthdate.getFullYear();
+            const isBirthdayPassed =
+                today.getMonth() > birthdate.getMonth() ||
+                (today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate());
+        
+            if (age < 16 || (age === 16 && !isBirthdayPassed)) {
+                newErrors.birthdate = 'Você deve ter no mínimo 16 anos.';
+            }
         }
+    
 
         if (!formData.senha.trim()) {
             newErrors.password = 'A senha é obrigatória.';
@@ -127,18 +140,16 @@ export function SignUp({ onNavigate }) {
                 />
 
                 {errors.course && <span style={{ color: 'red', fontSize: '12px' }}>{errors.course}</span>}
-                <label>Curso:</label>
                 <select name="curso_id" value={formData.curso_id} onChange={handleChange}>
-                    <option value="">Selecione um curso</option>
+                    <option value="">Curso:</option>
                     {cursos.map((curso) => (
                         <option key={curso.id} value={curso.id}>{curso.nome}</option>
                     ))}
                 </select>
 
                 {errors.turno && <span style={{ color: 'red', fontSize: '12px' }}>{errors.turno}</span>}
-                <label>Turno:</label>
                 <select name="turno_id" value={formData.turno_id} onChange={handleChange}>
-                    <option value="">Selecione um turno</option>
+                    <option value="">Turno:</option>
                     {turnos.map((turno) => (
                         <option key={turno.id} value={turno.id}>{turno.nome}</option>
                     ))}

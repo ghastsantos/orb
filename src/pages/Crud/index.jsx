@@ -11,6 +11,7 @@ export function Crud({ onNavigate}){
         curso_id: "",
         turno_id: "",
         dataNasc: "",
+        senha: ""
     });
     const [editIndex, setEditIndex] = useState(null);
     const [cursos, setCursos] = useState([]);
@@ -75,6 +76,7 @@ export function Crud({ onNavigate}){
             curso_id: "",
             turno_id: "",
             dataNasc: "",
+            senha:""
         });
     };
 
@@ -86,6 +88,7 @@ export function Crud({ onNavigate}){
             curso_id: usuario.curso_id,
             turno_id: usuario.turno_id,
             dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
+            senha: usuario.senha 
         });
         setEditIndex(index);
     };
@@ -155,6 +158,13 @@ export function Crud({ onNavigate}){
                     onChange={handleChange}
                     required
                 />
+                  <input
+                    name="senha"
+                    value={form.senha}
+                    onChange={handleChange}
+                    placeholder="senha"
+                    required
+                />
                 <button type="submit">
                     {editIndex !== null ? "Atualizar" : "Adicionar"}
                 </button>
@@ -169,6 +179,7 @@ export function Crud({ onNavigate}){
                         <th>Turno</th>
                         <th>Data de Nascimento</th>
                         <th>Ações</th>
+                    
                     </tr>
                 </thead>
                 <tbody>
@@ -179,6 +190,7 @@ export function Crud({ onNavigate}){
                             <td>{cursos.find(c => c.id === item.curso_id)?.nome || item.curso_id}</td>
                             <td>{turnos.find(t => t.id === item.turno_id)?.nome || item.turno_id}</td>
                             <td>{formatDate(item.data_nasc)}</td>
+                           
                             <td>
                                 <button className="edit" onClick={() => handleEdit(index)}>
                                     Editar

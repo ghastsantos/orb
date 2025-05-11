@@ -8,6 +8,7 @@ export function Crud({ onNavigate}){
     const [form, setForm] = useState({
         nome: "",
         email: "",
+        cor: "",
         curso_id: "",
         turno_id: "",
         dataNasc: "",
@@ -73,6 +74,7 @@ export function Crud({ onNavigate}){
         setForm({
             nome: "",
             email: "",
+            cor: "",   
             curso_id: "",
             turno_id: "",
             dataNasc: "",
@@ -85,6 +87,7 @@ export function Crud({ onNavigate}){
         setForm({
             nome: usuario.nome,
             email: usuario.email,
+            cor: usuario.cor,
             curso_id: usuario.curso_id,
             turno_id: usuario.turno_id,
             dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
@@ -116,6 +119,13 @@ export function Crud({ onNavigate}){
                     value={form.nome}
                     onChange={handleChange}
                     placeholder="Nome"
+                    required
+                />
+                <input
+                    cor="cor"
+                    value={form.cor}
+                    onChange={handleChange}
+                    placeholder="Cor"
                     required
                 />
                 <input
@@ -175,6 +185,7 @@ export function Crud({ onNavigate}){
                     <tr>
                         <th>Nome</th>
                         <th>Email</th>
+                        <th>Cor</th>
                         <th>Curso</th>
                         <th>Turno</th>
                         <th>Data de Nascimento</th>
@@ -187,6 +198,7 @@ export function Crud({ onNavigate}){
                         <tr key={index}>
                             <td>{item.nome}</td>
                             <td>{item.email}</td>
+                            <td>{item.cor}</td>
                             <td>{cursos.find(c => c.id === item.curso_id)?.nome || item.curso_id}</td>
                             <td>{turnos.find(t => t.id === item.turno_id)?.nome || item.turno_id}</td>
                             <td>{formatDate(item.data_nasc)}</td>

@@ -9,6 +9,7 @@ import logoImg from '../../assets/logo.png';
 export function SignUp({ onNavigate }) {
     const [formData, setFormData] = useState({
         nome: '',
+        cor: '',
         email: '',
         curso_id: '',
         turno_id: '',
@@ -127,6 +128,15 @@ export function SignUp({ onNavigate }) {
                     name="nome"
                     value={formData.nome}
                     onChange={handleChange}
+                />
+                
+                <Input
+                    placeholder="Cor"
+                    icon={FiUser}
+                    value={formData.cor}
+                    name="cor"
+                    onChange={handleChange}
+                    
                 />
 
                 {errors.email && <span style={{ color: 'red', fontSize: '12px' }}>{errors.email}</span>}

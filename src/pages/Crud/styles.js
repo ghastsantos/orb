@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     height: 100vh;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,6 +104,32 @@ export const Table = styled.table`
                 color: ${({ theme }) => theme.COLORS.WHITE};
             }
         }
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        button {
+            font-size: 10px;
+            padding: 4px 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        th, td {
+            font-size: 10px;
+            padding: 4px;
+        }
+
+        button {
+            font-size: 8px;
+            padding: 3px 6px;
+        }
+
+        overflow-x: auto;
     }
 `;
 

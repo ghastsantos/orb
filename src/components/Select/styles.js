@@ -13,11 +13,11 @@ export const Container = styled.div`
             margin-left: 16px;
     }
 
-    > input{
+    select {
         height: 56px;
         width: 100%;
         padding: 12px;
-        color: ${({ theme }) => theme.COLORS.WHITE};
+        color: ${({ theme }) => theme.COLORS.GRAY_100};
         background: transparent;
         border: 0;
 
@@ -25,20 +25,8 @@ export const Container = styled.div`
             font-size: 14px;
         }
         
-        &:placeholder{
-            color: ${({ theme }) => theme.COLORS.GRAY_300};
+        option {
+            color: ${({ theme }) => theme.COLORS.GRAY_300}; 
         }
     }
-
-    button {
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 1rem;
-
-        svg {
-        color: ${({ theme }) => theme.COLORS.WHITE};
-        }
-    } 
-
 `;

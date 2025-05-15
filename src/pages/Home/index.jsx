@@ -41,7 +41,7 @@ export function Home({ onNavigate }) {
                 <li><ButtonText title="Notícias" icon={FiInfo} /></li>
                 <li><ButtonText title="Eventos" icon={FiSmile} /></li>
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
-                <li><ButtonText title="Perfil" icon={FiUser} /></li>
+                <li><ButtonText title="Perfil" icon={FiUser} onClick={() => onNavigate('profile')}/></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
                 <li><ButtonText title="Crud" onClick={() => onNavigate('crud')}/></li>
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>

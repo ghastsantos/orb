@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-    grid-area: header;
 
     height: 105px;
     width: 100%;
@@ -20,11 +19,10 @@ export const Container = styled.header`
     @media (max-width: 767px) {
         height: 80px;
         padding: 0 20px;
-        width: 250px;
 
         &.menu-open {
             width: 250px;
-            margin-left: -96px;
+            margin-left: -70px;
         }
 
     }

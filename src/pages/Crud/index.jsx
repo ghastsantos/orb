@@ -34,7 +34,6 @@ export function Crud({ onNavigate}){
     }, []);
 
     const formatDate = (dateStr) => {
-        // Converte de 'YYYY-MM-DDTHH:mm:ss.sssZ' para 'YYYY-MM-DD'
         return dateStr ? dateStr.split("T")[0] : "";
     };
 
@@ -45,38 +44,59 @@ export function Crud({ onNavigate}){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+    
         const payload = {
             ...form,
-            dataNasc: formatDate(form.dataNasc),
+            data_nasc: form.dataNasc, // Certifique-se de usar o nome correto do campo
         };
-
+    
+        if (!form.senha.trim()) {
+            delete payload.senha; // Remove a senha se estiver vazia
+        }
+    
         if (editIndex !== null) {
             try {
                 const id = dados[editIndex].id;
                 await axios.put(`http://localhost:3000/api/usuario/${id}`, payload);
+    
+                // Atualize o estado `dados` com os novos valores
                 const novosDados = [...dados];
-                novosDados[editIndex] = { ...payload, id };
+                novosDados[editIndex] = { ...dados[editIndex], ...payload };
                 setDados(novosDados);
+    
                 setEditIndex(null);
+                window.location.reload();
             } catch (error) {
-                console.log("Erro ao atualizar usuário:", error);
+                console.error("Erro ao atualizar usuário:", error);
             }
         } else {
             try {
                 const res = await axios.post("http://localhost:3000/api/usuario", payload);
-                setDados([...dados, res.data]); // res.data deve conter o usuário com ID
+                setDados([...dados, res.data]);
+                setForm({
+                    nome: "",
+                    email: "",
+                    curso_id: "",
+                    turno_id: "",
+                    dataNasc: "",
+                    senha: "",
+                });
+
+                window.location.reload();
             } catch (error) {
-                console.log("Erro ao cadastrar usuário:", error);
+                console.error("Erro ao cadastrar usuário:", error);
             }
         }
-
+    
+        // Limpe o formulário após salvar
         setForm({
             nome: "",
             email: "",
             curso_id: "",
             turno_id: "",
             dataNasc: "",
-            senha:""
+            senha: "",
         });
     };
 
@@ -88,7 +108,7 @@ export function Crud({ onNavigate}){
             curso_id: usuario.curso_id,
             turno_id: usuario.turno_id,
             dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
-            senha: usuario.senha 
+            senha: ""
         });
         setEditIndex(index);
     };
@@ -158,11 +178,15 @@ export function Crud({ onNavigate}){
                     onChange={handleChange}
                     required
                 />
-                  <input
+                <input
+                    type="password"
                     name="senha"
+                    placeholder="Digite sua senha (ou repita caso não queira mudá-la em caso de atualização)"
                     value={form.senha}
-                    onChange={handleChange}
-                    placeholder="senha"
+                    onChange={(e) => setForm({ ...form, senha: e.target.value })}
+                    onInvalid={(e) => {
+                        e.preventDefault();
+                    }}
                     required
                 />
                 <button type="submit">
@@ -179,7 +203,6 @@ export function Crud({ onNavigate}){
                         <th>Turno</th>
                         <th>Data de Nascimento</th>
                         <th>Ações</th>
-                    
                     </tr>
                 </thead>
                 <tbody>
@@ -187,10 +210,9 @@ export function Crud({ onNavigate}){
                         <tr key={index}>
                             <td>{item.nome}</td>
                             <td>{item.email}</td>
-                            <td>{cursos.find(c => c.id === item.curso_id)?.nome || item.curso_id}</td>
-                            <td>{turnos.find(t => t.id === item.turno_id)?.nome || item.turno_id}</td>
-                            <td>{formatDate(item.data_nasc)}</td>
-                           
+                            <td>{cursos.find(c => String(c.id) === String(item.curso_id))?.nome || "Curso não encontrado"}</td>
+                            <td>{turnos.find(t => String(t.id) === String(item.turno_id))?.nome || "Turno não encontrado"}</td>
+                            <td>{formatDate(item.data_nasc) || "Data não disponível"}</td>
                             <td>
                                 <button className="edit" onClick={() => handleEdit(index)}>
                                     Editar

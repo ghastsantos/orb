@@ -7,6 +7,7 @@ import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import { Home } from './pages/Home';
 import { Crud } from './pages/Crud';
+import { Profile } from './pages/Profile';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login');
@@ -50,6 +51,7 @@ function App() {
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
             {currentPage === 'crud' && <Crud onNavigate={handleNavigation}/>}
+            {currentPage === 'profile' && <Profile onNavigate={handleNavigation} usuario={usuario} />}
             {currentPage === 'home' && <Home onNavigate={handleNavigation} usuario={usuario} />}
         </>
     );

@@ -7,8 +7,6 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    /* Para navegadores baseados no WebKit */
-
     input[type="password"]::-ms-reveal, /* Para navegadores baseados no Edge */
     input[type="password"]::-ms-clear,  /* Para navegadores baseados no Edge */
     input[type="password"]::-webkit-clear-button, /* Para navegadores baseados no WebKit */

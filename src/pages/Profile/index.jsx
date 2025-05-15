@@ -44,8 +44,7 @@ export function Profile({ onNavigate }){
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
             <Form>
-                <div>
-                    <h1>Meu perfil</h1>
+                <h1>Meu perfil</h1>
                 <img src="https://github.com/ghastsantos.png" alt="foto do usuário"/>
                 <Input
                     placeholder="Nome" 
@@ -69,7 +68,6 @@ export function Profile({ onNavigate }){
                 />
 
                 <Button title="Salvar" />
-                </div>
             </Form>
         </Container>
 

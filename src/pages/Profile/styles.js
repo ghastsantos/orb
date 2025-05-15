@@ -116,41 +116,52 @@ export const Menu = styled.ul`
 
 
 export const Form = styled.form`
+    zoom: 0.85;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
-    top: 50%;
-    left: 55%; 
+    top: 60%;
+    left: 50%; 
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 600px;
     padding: 20px;
-    background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    overflow-y: hidden;
     transition: padding-bottom 0.3s ease-in-out;
 
     &.menu-open {
         padding-bottom: 8rem;
     }
 
-    div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+    h1{
+        font-size: 36px;
         margin-bottom: 20px;
+    }
 
-        h1{
-            font-size: 36px;
-            margin-bottom: 20px;
+    img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }
+
+    div {
+        height: 56px;
+        width: 100%;
+        padding: 12px;
+        color: ${({ theme }) => theme.COLORS.WHITE};
+        background: black;
+        border: 0;
+
+        @media (max-width: 768px) {
+            font-size: 14px;
         }
-
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
+        
+        &:placeholder{
+            color: ${({ theme }) => theme.COLORS.GRAY_300};
         }
     }
 `;

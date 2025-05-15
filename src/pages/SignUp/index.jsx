@@ -162,7 +162,7 @@ export function SignUp({ onNavigate }) {
                     value={formData.nome}
                     onChange={handleChange}
                 />
-
+                
                 {errors.email && <span style={{ color: 'red', fontSize: '12px' }}>{errors.email}</span>}
                 <Input
                     placeholder="E-mail"

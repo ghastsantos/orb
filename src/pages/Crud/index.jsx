@@ -92,7 +92,7 @@ export function Crud({ onNavigate}){
         // Limpe o formulário após salvar
         setForm({
             nome: "",
-            email: "",
+            email: "",  
             curso_id: "",
             turno_id: "",
             dataNasc: "",

@@ -14,15 +14,20 @@ export function Home({ onNavigate }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [usuario, setUsuario ] = useState(null);
 
+    const [usuariosCarousel, setUsuariosCarousel] = useState([]);
+
     useEffect(() => {
-        axios.get('http://localhost:3000/api/session', {withCredentials: true})
-        .then(res => {
-            setUsuario(res.data);
-        })
-        .catch(err => {
-            console.log("Usuário não autenticado")
-        });
+    // Verifica sessão
+    axios.get('http://localhost:3000/api/session', { withCredentials: true })
+        .then(res => setUsuario(res.data))
+        .catch(err => console.log("Usuário não autenticado"));
+
+    // Busca usuários para o carrossel
+    axios.get('http://localhost:3000/api/usuario', { withCredentials: true })
+        .then(res => setUsuariosCarousel(res.data))
+        .catch(err => console.error('Erro ao carregar usuários:', err));
     }, []);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -83,78 +88,15 @@ export function Home({ onNavigate }) {
                 </Section>
                 <Section title="Conecte-se com outros estudantes!">
                     <UsersCarousel
-                        data={[
-                            {
-                                id: '1',
-                                name: 'Gastão Santos',
-                                text: 'teste',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '1', name: 'Admin' },
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                            {
-                                id: '2',
-                                name: 'Caio Lamoglia',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '1', name: 'Admin' },
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                            {
-                                id: '3',
-                                name: 'Matheus Saldanha',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '1', name: 'Admin' },
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                            {
-                                id: '4',
-                                name: 'Davi Henrique',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '1', name: 'Admin' },
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                            {
-                                id: '5',
-                                name: 'Bebezão',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '3', name: 'Direito' },
-                                ],
-                            },
-                            {
-                                id: '6',
-                                name: 'Caetano Padoin',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                            {
-                                id: '7',
-                                name: 'Luan Lucho',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },                            {
-                                id: '8',
-                                name: 'Bruno Cristofolli',
-                                image: 'https://github.com/ghastsantos.png',
-                                tags: [
-                                    { id: '2', name: 'Sistemas de Informação' },
-                                ],
-                            },
-                        ]}
-                    />
-                </Section>
+                    data={usuariosCarousel.map(user => ({
+                        id: user.id,
+                        name: user.nome,
+                        image: `http://localhost:3000/api/usuario/imagem/${user.id}`,
+                        text: user.descricao || "", // Se quiser uma descrição
+                        tags: user.tags, // Assumindo que virão as tags
+                    }))}
+                            />
+                    </Section>
             </Content>
         </Container>
     );

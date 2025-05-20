@@ -33,6 +33,7 @@ export function SignUp({ onNavigate }) {
         dataNasc: '',
         senha: '',
         confirmasenha: '',
+        imagem: null,
     });
 
     const [cursos, setCursos] = useState([]);
@@ -122,23 +123,28 @@ export function SignUp({ onNavigate }) {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) {
-            return;
-        }
-    
-        const formattedData = {
-            ...formData,
-            dataNasc: formatDateForDatabase(formData.dataNasc),
-        };
-    
-        try {
-            await axios.post('http://localhost:3000/api/usuario', formattedData);
-            console.log('Usuário cadastrado com sucesso!');
-            onNavigate('login');
-        } catch (error) {
-            console.error('Erro ao cadastrar usuário:', error);
-        }
+             event.preventDefault();
+
+    if (!validateForm()) return;
+
+    const dataToSend = new FormData(); // novo nome para não colidir com o formData do state
+    dataToSend.append("nome", formData.nome);
+    dataToSend.append("email", formData.email);
+    dataToSend.append("senha", formData.senha);
+    dataToSend.append("curso_id", formData.curso_id);
+    dataToSend.append("turno_id", formData.turno_id);
+    dataToSend.append("dataNasc", formatDateForDatabase(formData.dataNasc));
+    if (formData.imagem) {
+        dataToSend.append("imagem", formData.imagem);
+    }
+
+    try {
+        const response = await axios.post("http://localhost:3000/api/usuario", dataToSend);
+        console.log(response.data);
+        // Redirecionar ou limpar formulário aqui, se quiser
+    } catch (err) {
+        console.error(err);
+    }
     };
 
     return (
@@ -201,7 +207,7 @@ export function SignUp({ onNavigate }) {
                     name="dataNasc"
                     value={formData.dataNasc}
                     onChange={handleChange}
-                    maxLenght={10}
+                    maxLength={10}
                     autoComplete="new-password"
                 />
 
@@ -231,6 +237,15 @@ export function SignUp({ onNavigate }) {
                     onCut={(e) => e.preventDefault()}  // Impede recortar
                     onPaste={(e) => e.preventDefault()} // Impede colar
                 />
+                
+                    <label style={{ fontSize: '14px', marginTop: '10px' }}>Imagem de perfil (opcional)</label>
+                    <Input
+                     placeholder="Imagem de perfil"
+                     type="file"
+                     name="imagem"
+                      accept="image/*"
+                      onChange={(e) => setFormData({ ...formData, imagem: e.target.files[0] })}
+                     />
 
                 <Button title="Cadastrar" type="submit" />
 

@@ -5,8 +5,11 @@ export function Header({className, onNavigate, usuario }){
     return(
         <Container className={className}>
             <Profile>
-                <img src="https://github.com/ghastsantos.png" alt="foto do usuário"/>
-
+                <img
+                    src={usuario?.id ? `http://localhost:3000/api/usuario/imagem/${usuario.id}` : ''}
+                     alt="Foto do usuário"
+                     onClick={() => onNavigate('profile')}
+                    />
                 <div>
                     <span>Bem-vindo</span>
                     <strong>{usuario?.nome||"usuario"}</strong>

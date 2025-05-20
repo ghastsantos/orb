@@ -36,19 +36,15 @@ export function UsersCarousel({ data }) {
                     <Card key={user.id}>
                         <Image>
                             <img
-                                src={user.image || 'https://via.placeholder.com/100'}
+                                src={user.image || ''}
                                 alt={`Foto de ${user.name}`}
-                                onError={(e) => (e.target.src = 'https://via.placeholder.com/100')}
+                                onError={(e) => (e.target.src = '')}
                             />
                         </Image>
                         <h1>{user.name}</h1>
-                        {user.tags && (
-                            <footer>
-                                {user.tags.map((tag) => (
-                                    <Tag key={tag.id} title={tag.name} />
-                                ))}
-                            </footer>
-                        )}
+                        <footer>    
+                        {user.tags}
+                        </footer>
                     </Card>
                 ))}
             </CarouselWrapper>

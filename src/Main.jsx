@@ -7,11 +7,20 @@ import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import { Home } from './pages/Home';
 import { Crud } from './pages/Crud';
+import { CrudNews } from './pages/CrudNews';
+import { NewsPage } from './pages/NewsPage';
 import { Profile } from './pages/Profile';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login');
     const [usuario, setUsuario] = useState(null);
+    const [imgVersion, setImgVersion] = useState(Date.now());
+
+    // Quando o usuário atualizar a foto:
+    const handleFotoAtualizada = () => {
+        setImgVersion(Date.now());
+        // Se precisar atualizar o usuário, faça aqui também
+    };
 
     useEffect(() => {
         const storedPage = localStorage.getItem("currentPage");
@@ -30,8 +39,7 @@ function App() {
         }
     }, [usuario, currentPage]);
    
-   
-     const handleNavigation = (page, usuarioData = null) => {
+    const handleNavigation = (page, usuarioData = null) => {
         setCurrentPage(page);
         localStorage.setItem("currentPage", page);
 
@@ -51,8 +59,29 @@ function App() {
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
             {currentPage === 'crud' && <Crud onNavigate={handleNavigation}/>}
-            {currentPage === 'profile' && <Profile onNavigate={handleNavigation} usuario={usuario} />}
-            {currentPage === 'home' && <Home onNavigate={handleNavigation} usuario={usuario} />}
+            {currentPage === 'crudNews' && <CrudNews onNavigate={handleNavigation}/>}
+            {currentPage === 'newsPage' && (
+                <NewsPage
+                    onNavigate={handleNavigation}
+                    usuario={usuario}
+                    imgVersion={imgVersion}
+                />
+            )}
+            {currentPage === 'profile' && (
+                <Profile
+                    onNavigate={handleNavigation}
+                    usuario={usuario}
+                    imgVersion={imgVersion}
+                    onFotoAtualizada={handleFotoAtualizada}
+                />
+            )}
+            {currentPage === 'home' && (
+                <Home
+                    onNavigate={handleNavigation}
+                    usuario={usuario}
+                    imgVersion={imgVersion}
+                />
+            )}
         </>
     );
 }

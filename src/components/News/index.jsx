@@ -24,9 +24,8 @@ export function News({ data }) {
                     <Card key={newsItem.id}>
                         <Image>
                             <img
-                                src={newsItem.image || 'https://via.placeholder.com/300x180'}
+                                src={newsItem.image || ''}
                                 alt={`Imagem de ${newsItem.title}`}
-                                onError={(e) => (e.target.src = 'https://via.placeholder.com/300x180')}
                             />
                         </Image>
                         <h1>{newsItem.title}</h1>

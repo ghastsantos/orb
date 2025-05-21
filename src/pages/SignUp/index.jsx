@@ -127,7 +127,7 @@ export function SignUp({ onNavigate }) {
 
     if (!validateForm()) return;
 
-    const dataToSend = new FormData(); // novo nome para não colidir com o formData do state
+    const dataToSend = new FormData(); 
     dataToSend.append("nome", formData.nome);
     dataToSend.append("email", formData.email);
     dataToSend.append("senha", formData.senha);
@@ -141,7 +141,7 @@ export function SignUp({ onNavigate }) {
     try {
         const response = await axios.post("http://localhost:3000/api/usuario", dataToSend);
         console.log(response.data);
-        // Redirecionar ou limpar formulário aqui, se quiser
+        onNavigate('login');
     } catch (err) {
         console.error(err);
     }
@@ -237,15 +237,7 @@ export function SignUp({ onNavigate }) {
                     onCut={(e) => e.preventDefault()}  // Impede recortar
                     onPaste={(e) => e.preventDefault()} // Impede colar
                 />
-                
-                    <label style={{ fontSize: '14px', marginTop: '10px' }}>Imagem de perfil (opcional)</label>
-                    <Input
-                     placeholder="Imagem de perfil"
-                     type="file"
-                     name="imagem"
-                      accept="image/*"
-                      onChange={(e) => setFormData({ ...formData, imagem: e.target.files[0] })}
-                     />
+            
 
                 <Button title="Cadastrar" type="submit" />
 

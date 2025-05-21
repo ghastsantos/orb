@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Form, Table, BackButton } from './styles';
 import { useState, useEffect } from 'react';
 
-export function Crud({ onNavigate}){
+export function Crud({ onNavigate }) {
     const [dados, setDados] = useState([]);
     const [form, setForm] = useState({
         nome: "",
@@ -11,7 +11,8 @@ export function Crud({ onNavigate}){
         curso_id: "",
         turno_id: "",
         dataNasc: "",
-        senha: ""
+        senha: "",
+        imagem: null
     });
     const [editIndex, setEditIndex] = useState(null);
     const [cursos, setCursos] = useState([]);
@@ -38,66 +39,53 @@ export function Crud({ onNavigate}){
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        const { name, value, files } = e.target;
+        setForm((prev) => ({
+            ...prev,
+            [name]: files ? files[0] : value,
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-    
-        const payload = {
-            ...form,
-            data_nasc: form.dataNasc, // Certifique-se de usar o nome correto do campo
-        };
-    
-        if (!form.senha.trim()) {
-            delete payload.senha; // Remove a senha se estiver vazia
-        }
-    
-        if (editIndex !== null) {
-            try {
-                const id = dados[editIndex].id;
-                await axios.put(`http://localhost:3000/api/usuario/${id}`, payload);
-    
-                // Atualize o estado `dados` com os novos valores
-                const novosDados = [...dados];
-                novosDados[editIndex] = { ...dados[editIndex], ...payload };
-                setDados(novosDados);
-    
-                setEditIndex(null);
-                window.location.reload();
-            } catch (error) {
-                console.error("Erro ao atualizar usuário:", error);
-            }
-        } else {
-            try {
-                const res = await axios.post("http://localhost:3000/api/usuario", payload);
-                setDados([...dados, res.data]);
-                setForm({
-                    nome: "",
-                    email: "",
-                    curso_id: "",
-                    turno_id: "",
-                    dataNasc: "",
-                    senha: "",
-                });
+        const data = new FormData();
+        data.append('nome', form.nome);
+        data.append('email', form.email);
+        data.append('curso_id', form.curso_id);
+        data.append('turno_id', form.turno_id);
+        data.append('data_nasc', form.dataNasc);
+        if (form.senha) data.append('senha', form.senha);
+        if (form.imagem) data.append('imagem', form.imagem);
 
-                window.location.reload();
-            } catch (error) {
-                console.error("Erro ao cadastrar usuário:", error);
+        try {
+            if (editIndex !== null) {
+                const id = dados[editIndex].id;
+                await axios.put(`http://localhost:3000/api/usuario/${id}`, data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            } else {
+                await axios.post("http://localhost:3000/api/usuario", data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
             }
+            // Atualize a lista após submit
+            const usuariosRes = await axios.get("http://localhost:3000/api/usuario");
+            setDados(usuariosRes.data);
+            setForm({
+                nome: "",
+                email: "",
+                curso_id: "",
+                turno_id: "",
+                dataNasc: "",
+                senha: "",
+                imagem: null
+            });
+            setEditIndex(null);
+            window.location.reload();
+        } catch (error) {
+            console.error("Erro ao salvar usuário:", error);
         }
-    
-        // Limpe o formulário após salvar
-        setForm({
-            nome: "",
-            email: "",  
-            curso_id: "",
-            turno_id: "",
-            dataNasc: "",
-            senha: "",
-        });
     };
 
     const handleEdit = (index) => {
@@ -108,7 +96,8 @@ export function Crud({ onNavigate}){
             curso_id: usuario.curso_id,
             turno_id: usuario.turno_id,
             dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
-            senha: ""
+            senha: "",
+            imagem: null
         });
         setEditIndex(index);
     };
@@ -123,6 +112,7 @@ export function Crud({ onNavigate}){
             console.log("Erro ao excluir usuário:", error);
         }
     };
+
     return (
         <Container>
             <h1>CRUD de Usuários</h1>
@@ -183,11 +173,14 @@ export function Crud({ onNavigate}){
                     name="senha"
                     placeholder="Digite sua senha (ou repita caso não queira mudá-la em caso de atualização)"
                     value={form.senha}
-                    onChange={(e) => setForm({ ...form, senha: e.target.value })}
-                    onInvalid={(e) => {
-                        e.preventDefault();
-                    }}
+                    onChange={handleChange}
                     required
+                />
+                <input
+                    type="file"
+                    name="imagem"
+                    accept="image/*"
+                    onChange={handleChange}
                 />
                 <button type="submit">
                     {editIndex !== null ? "Atualizar" : "Adicionar"}
@@ -202,6 +195,7 @@ export function Crud({ onNavigate}){
                         <th>Curso</th>
                         <th>Turno</th>
                         <th>Data de Nascimento</th>
+                        <th>Imagem</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -213,6 +207,17 @@ export function Crud({ onNavigate}){
                             <td>{cursos.find(c => String(c.id) === String(item.curso_id))?.nome || "Curso não encontrado"}</td>
                             <td>{turnos.find(t => String(t.id) === String(item.turno_id))?.nome || "Turno não encontrado"}</td>
                             <td>{formatDate(item.data_nasc) || "Data não disponível"}</td>
+                            <td>
+                                {item.imagem ? (
+                                    <img
+                                        src={`http://localhost:3000/api/usuario/imagem/${item.id}`}
+                                        alt="Usuário"
+                                        style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: '50%' }}
+                                    />
+                                ) : (
+                                    <span style={{ color: "#888" }}>Sem imagem</span>
+                                )}
+                            </td>
                             <td>
                                 <button className="edit" onClick={() => handleEdit(index)}>
                                     Editar

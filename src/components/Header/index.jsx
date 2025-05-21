@@ -1,5 +1,6 @@
 import { Container, Profile, Logout } from './styles';
 import { FiLogOut } from 'react-icons/fi';
+import defaultAvatar from '../../assets/fotoperfil.png';
 
 export function Header({ className, onNavigate, usuario, imgVersion }) {
     return (
@@ -9,11 +10,14 @@ export function Header({ className, onNavigate, usuario, imgVersion }) {
                     src={
                         usuario?.id
                             ? `http://localhost:3000/api/usuario/imagem/${usuario.id}?t=${imgVersion}`
-                            : ''
+                            : defaultAvatar
                     }
                     alt="Foto do usuário"
                     onClick={() => onNavigate('profile')}
-                    onError={e => { e.target.src = ''; }} // Limpa a imagem se não existir
+                    onError={e => {
+                        e.target.onerror = null;
+                        e.target.src = defaultAvatar;
+                    }}
                 />
                 <div>
                     <span>Bem-vindo</span>

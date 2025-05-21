@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, CarouselWrapper, Card, Image, Controls } from './styles';
 import { Tag } from '../Tag';
+import defaultAvatar from '../../assets/fotoperfil.png';
 
 export function UsersCarousel({ data }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +23,6 @@ export function UsersCarousel({ data }) {
         return 3;
     };
 
-
     if (!Array.isArray(data) || data.length === 0) {
         return <p>Nenhum usuário disponível.</p>;
     }
@@ -38,12 +38,15 @@ export function UsersCarousel({ data }) {
                             <img
                                 src={user.image || ''}
                                 alt={`Foto de ${user.name}`}
-                                onError={(e) => (e.target.src = '')}
+                                onError={e => {
+                                  e.target.onerror = null;
+                                  e.target.src = defaultAvatar;
+                                }}
                             />
                         </Image>
                         <h1>{user.name}</h1>
-                        <footer>    
-                        {user.tags}
+                        <footer>
+                            {user.tags}
                         </footer>
                     </Card>
                 ))}

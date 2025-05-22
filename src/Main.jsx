@@ -58,8 +58,8 @@ function App() {
         <>
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
-            {currentPage === 'crud' && <Crud onNavigate={handleNavigation}/>}
-            {currentPage === 'crudNews' && <CrudNews onNavigate={handleNavigation}/>}
+            {currentPage === 'crud' && usuario?.is_admin === 1 && <Crud onNavigate={handleNavigation}/>}
+            {currentPage === 'crudNews' && usuario?.is_admin === 1 && <CrudNews onNavigate={handleNavigation}/>}
             {currentPage === 'newsPage' && (
                 <NewsPage
                     onNavigate={handleNavigation}

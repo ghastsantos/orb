@@ -122,8 +122,10 @@ export const Content = styled.div`
     position: relative;
     right: 30%;
 
-    &.menu-open {
-        padding-bottom: 8rem;
+    @media (max-width: 767px) {
+        &.menu-open {
+            display: none;
+        }
     }
 `;
 

@@ -57,6 +57,7 @@ export function Crud({ onNavigate }) {
         data.append('data_nasc', form.dataNasc);
         if (form.senha) data.append('senha', form.senha);
         if (form.imagem) data.append('imagem', form.imagem);
+        data.append('is_admin', form.is_admin || 0);
 
         try {
             if (editIndex !== null) {
@@ -79,7 +80,8 @@ export function Crud({ onNavigate }) {
                 turno_id: "",
                 dataNasc: "",
                 senha: "",
-                imagem: null
+                imagem: null,
+                is_admin: 0
             });
             setEditIndex(null);
             window.location.reload();
@@ -97,7 +99,8 @@ export function Crud({ onNavigate }) {
             turno_id: usuario.turno_id,
             dataNasc: formatDate(usuario.data_nasc || usuario.dataNasc || ""),
             senha: "",
-            imagem: null
+            imagem: null,
+            is_admin: usuario.is_admin || 0
         });
         setEditIndex(index);
     };
@@ -181,6 +184,13 @@ export function Crud({ onNavigate }) {
                     name="imagem"
                     accept="image/*"
                     onChange={handleChange}
+                />
+                <label>Administrador</label>
+                <input
+                    type="checkbox"
+                    name="is_admin"
+                    checked={!!form.is_admin}
+                    onChange={e => setForm({ ...form, is_admin: e.target.checked ? 1 : 0 })}
                 />
                 <button type="submit">
                     {editIndex !== null ? "Atualizar" : "Adicionar"}

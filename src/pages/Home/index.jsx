@@ -53,8 +53,12 @@ export function Home({ onNavigate, usuario, imgVersion }) {
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
                 <li><ButtonText title="Perfil" icon={FiUser} onClick={() => onNavigate('profile')} /></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
-                <li><ButtonText title="Crud" onClick={() => onNavigate('crud')} /></li>
-                <li><ButtonText title="Crud de Notícias" onClick={() => onNavigate('crudNews')} /></li>
+                {usuario?.is_admin === 1 && (
+                    <>
+                        <li><ButtonText title="Crud" onClick={() => onNavigate('crud')} /></li>
+                        <li><ButtonText title="Crud de Notícias" onClick={() => onNavigate('crudNews')} /></li>
+                    </>
+                )}
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
 

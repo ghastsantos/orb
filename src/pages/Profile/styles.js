@@ -130,10 +130,13 @@ export const Form = styled.form`
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow-y: hidden;
-    transition: padding-bottom 0.3s ease-in-out;
 
-    &.menu-open {
-        padding-bottom: 8rem;
+    @media (max-width: 767px) {
+        top: 50%;
+
+        &.menu-open {
+            display: none;
+        }
     }
 
     h1{

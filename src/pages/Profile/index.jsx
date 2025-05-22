@@ -69,6 +69,15 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
             }
             setImagem(null);
             setRemoverFoto(false);
+
+            // Se houve troca de senha, expira a sessão e redireciona para login
+            if (novaSenha) {
+                // Opcional: faça logout no backend, se houver endpoint
+                await axios.post('http://localhost:3000/api/logout', {}, { withCredentials: true }).catch(() => {});
+                // Redireciona para login
+                onNavigate('login');
+                return; // Não continue na função
+            }
         } catch (err) {
             setError('Erro ao salvar perfil.');
         }
@@ -103,17 +112,22 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
             </Brand>
             <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <li><ButtonText title="Home" icon={FiHome} onClick={() => onNavigate('home')} /></li>
-                <li><ButtonText title="Notícias" icon={FiInfo} /></li>
+                <li><ButtonText title="Notícias" icon={FiInfo} onClick={() => onNavigate('newsPage')} /></li>
                 <li><ButtonText title="Eventos" icon={FiSmile} /></li>
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
                 <li><ButtonText title="Perfil" icon={FiUser} isActive onClick={() => onNavigate('profile')} /></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
-                <li><ButtonText title="Crud" onClick={() => onNavigate('crud')} /></li>
+                {usuario?.is_admin === 1 && (
+                    <>
+                        <li><ButtonText title="Crud" onClick={() => onNavigate('crud')} /></li>
+                        <li><ButtonText title="Crud de Notícias" onClick={() => onNavigate('crudNews')} /></li>
+                    </>
+                )}
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
-            <Form>
+            <Form className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <h1>Meu perfil</h1>
-                <div style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px', background: 'transparent' }}>
+                <div style={{ position: 'relative', width: 120, right: 10, height: 120, margin: '0 auto 24px', background: 'transparent' }}>
                     <img
                         src={fotoPerfilSrc}
                         alt="Foto do usuário"

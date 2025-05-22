@@ -8,6 +8,7 @@ import { News } from '../../Components/News';
 import logoImg from '../../assets/logo.png';
 import { UsersCarousel } from '../../Components/UsersCarousel';
 import axios from 'axios';
+import defaultAvatar from '../../assets/fotoperfil.png';
 
 export function Home({ onNavigate, usuario, imgVersion }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +21,6 @@ export function Home({ onNavigate, usuario, imgVersion }) {
     }, []);
 
     useEffect(() => {
-        // Busca usuários para o carrossel
         axios.get('http://localhost:3000/api/usuario', { withCredentials: true })
             .then(res => setUsuariosCarousel(res.data))
             .catch(err => console.error('Erro ao carregar usuários:', err));
@@ -38,12 +38,14 @@ export function Home({ onNavigate, usuario, imgVersion }) {
                     <img src={logoImg} alt="Logo" />
                 </Logo>
             </Brand>
+
             <Header
                 usuario={usuario}
                 imgVersion={imgVersion}
                 onNavigate={onNavigate}
                 className={isMenuOpen ? 'menu-open' : 'menu-closed'}
             />
+
             <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <li><ButtonText title="Home" icon={FiHome} isActive /></li>
                 <li><ButtonText title="Notícias" icon={FiInfo} onClick={() => onNavigate('newsPage')} /></li>
@@ -55,6 +57,7 @@ export function Home({ onNavigate, usuario, imgVersion }) {
                 <li><ButtonText title="Crud de Notícias" onClick={() => onNavigate('crudNews')} /></li>
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
             </Menu>
+
             <Content className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <Section title="Destaques da semana">
                     <News
@@ -74,17 +77,18 @@ export function Home({ onNavigate, usuario, imgVersion }) {
                         }
                     />
                 </Section>
+
                 <Section title="Conecte-se com outros estudantes!">
                     <UsersCarousel
                         data={usuariosCarousel.map(user => ({
                             id: user.id,
                             name: user.nome,
                             image: user.id
-                              ? `http://localhost:3000/api/usuario/imagem/${user.id}?t=${imgVersion}`
-                              : '',
+                                ? `http://localhost:3000/api/usuario/imagem/${user.id}?t=${imgVersion}`
+                                : defaultAvatar,
                             text: user.descricao || "",
                             tags: user.tags,
-                          }))}
+                        }))}
                     />
                 </Section>
             </Content>

@@ -6,6 +6,7 @@ import { ButtonText } from '../../Components/ButtonText';
 import { FiHome, FiCamera, FiMenu, FiX, FiMessageSquare, FiSmile, FiInfo, FiBell, FiLogOut, FiUser, FiMail, FiLock } from 'react-icons/fi';
 import logoImg from '../../assets/logo.png';
 import axios from 'axios';
+import defaultAvatar from '../../assets/fotoperfil.png';
 
 export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -87,10 +88,10 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
     };
 
     const fotoPerfilSrc = preview
-        ? preview
-        : removerFoto
-            ? ''
-            : (usuario?.id ? `http://localhost:3000/api/usuario/imagem/${usuario.id}?t=${imgVersion}` : '');
+    ? preview
+    : removerFoto
+        ? defaultAvatar
+        : (usuario?.id ? `http://localhost:3000/api/usuario/imagem/${usuario.id}?t=${imgVersion}` : defaultAvatar);
 
     return (
         <Container>
@@ -124,8 +125,11 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
                             border: '3px solid #ccc',
                             display: 'block'
                         }}
-                        onError={e => { e.target.src = ''; }}
-                    />
+                        onError={e => {
+                            e.target.onerror = null; // previne loop infinito
+                            e.target.src = defaultAvatar;
+                        }}
+/>
                     <button
                         type="button"
                         onClick={handleRemoverFoto}

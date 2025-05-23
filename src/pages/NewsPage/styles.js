@@ -33,6 +33,7 @@ export const Brand = styled.div`
     padding-left: 40px;
     height: 105px;
     display: flex;
+    z-index: 100;
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
@@ -80,8 +81,9 @@ export const Logo = styled.div`
 
 export const Menu = styled.ul`
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
-    padding-top: 64px;
+    padding-top: 136px;
     text-align: center;
+    position: fixed;
     height: 510px;
     width: 0;
     overflow: hidden;
@@ -118,10 +120,7 @@ export const Content = styled.div`
     padding: 0 64px;
     overflow-y: auto;
     position: relative;
-
-    &.menu-open {
-        padding-top: 140px;
-    }
+    right: 30%;
 
     @media (max-width: 767px) {
         right: 43%;

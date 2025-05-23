@@ -20,7 +20,7 @@ export function Header({ className, onNavigate, usuario, imgVersion }) {
                     }}
                 />
                 <div>
-                    <span>Bem-vindo</span>
+                    <span>Bem-vindo(a)</span>
                     <strong>{usuario?.nome || "Usuário"}</strong>
                 </div>
                 <Logout className={className} onClick={() => onNavigate('login')}>

@@ -46,7 +46,14 @@ export function UsersCarousel({ data }) {
                         </Image>
                         <h1>{user.name}</h1>
                         <footer>
-                            {user.tags}
+                            {user.is_admin === 1 ? (
+                                <Tag title="Admin" style={{ background: '#ff9800', color: '#fff' }} />
+                            ) : (
+                                <Tag title="Usuário" style={{ background: '#bbb', color: '#222' }} />
+                            )}
+                            {user.curso_nome && (
+                                <Tag title={user.curso_nome} style={{ background: '#bbb', color: '#222' }} />
+                            )}
                         </footer>
                     </Card>
                 ))}

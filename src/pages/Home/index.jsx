@@ -88,10 +88,10 @@ export function Home({ onNavigate, usuario, imgVersion }) {
                             id: user.id,
                             name: user.nome,
                             image: user.id
-                                ? `http://localhost:3000/api/usuario/imagem/${user.id}?t=${imgVersion}`
-                                : defaultAvatar,
-                            text: user.descricao || "",
-                            tags: user.tags,
+                            ? `http://localhost:3000/api/usuario/imagem/${user.id}?t=${imgVersion}`
+                            : defaultAvatar,
+                            is_admin: user.is_admin,
+                            curso_nome: user.curso_nome || "",
                         }))}
                     />
                 </Section>

@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Container, Brand, Menu, Logo, Content, NewsCard, NewsGrid, FilterBar } from './styles';
+import { Container, Brand, Menu, Logo, Content, FilterRow, NewsCard, NewsGrid, FilterBar } from './styles';
 import { Header } from '../../components/Header';
 import { ButtonText } from '../../Components/ButtonText';
 import { FiHome, FiMenu, FiMessageSquare, FiSearch, FiUser, FiSmile, FiInfo, FiBell, FiLogOut } from 'react-icons/fi';
 import logoImg from '../../assets/logo.png';
+import { Modal } from '../../components/Modal';
 import axios from 'axios';
 
 export function NewsPage({ onNavigate, usuario, imgVersion }) {
     const [noticias, setNoticias] = useState([]);
     const [pesquisa, setPesquisa] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [ordem, setOrdem] = useState("desc"); // "desc" = mais novas, "asc" = mais antigas
+    const [ordem, setOrdem] = useState("desc"); 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [noticiaSelecionada, setNoticiaSelecionada] = useState(null);
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/noticias")
@@ -28,6 +31,16 @@ export function NewsPage({ onNavigate, usuario, imgVersion }) {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    function formatarDataBR(dataISO) {
+    if (!dataISO) return "";
+    const data = new Date(dataISO);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+    }
+
 
     return (
         <Container>
@@ -61,15 +74,7 @@ export function NewsPage({ onNavigate, usuario, imgVersion }) {
             <Content className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <h1>Notícias</h1>
                 <FilterBar>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <select
-                            value={ordem}
-                            onChange={e => setOrdem(e.target.value)}
-                            style={{ padding: 6, borderRadius: 4, marginBottom: 0, border: "1px solid #ccc" }}
-                        >
-                            <option value="desc">Mais novas</option>
-                            <option value="asc">Mais antigas</option>
-                        </select>
+                    <FilterRow>
                         <div style={{ position: "relative" }}>
                             <input
                                 type="text"
@@ -80,14 +85,22 @@ export function NewsPage({ onNavigate, usuario, imgVersion }) {
                             />
                             <FiSearch style={{ position: "absolute", right: 8, top: 8, color: "#888" }} />
                         </div>
-                    </div>
+                        <select
+                            value={ordem}
+                            onChange={e => setOrdem(e.target.value)}
+                            style={{ padding: 6, borderRadius: 4, marginBottom: 0, border: "1px solid #ccc" }}
+                        >
+                            <option value="desc">Mais novas</option>
+                            <option value="asc">Mais antigas</option>
+                        </select>
+                    </FilterRow>
                 </FilterBar>
                 <NewsGrid>
                     {noticiasFiltradas.length === 0 && (
                         <p style={{ gridColumn: "1/-1", textAlign: "center" }}>Nenhuma notícia encontrada.</p>
                     )}
                     {noticiasFiltradas.map(n => (
-                        <NewsCard key={n.id}>
+                        <NewsCard key={n.id} onClick={() => { setNoticiaSelecionada(n); setModalOpen(true); }} style={{ cursor: 'pointer'}}>
                             <img
                                 src={n.temImagem
                                     ? `http://localhost:3000/api/noticias/imagem/${n.id}`
@@ -95,14 +108,33 @@ export function NewsPage({ onNavigate, usuario, imgVersion }) {
                                 alt="Notícia"
                                 style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }}
                             />
-                            <h3>{n.titulo}</h3>
-                            <span style={{ fontSize: 12, color: "#888" }}>
-                                {n.data_publicacao ? n.data_publicacao.split("T")[0] : ""}
+                            <h3 style={{ color: "black" }}>{n.titulo}</h3>
+                            <span style={{ fontSize: 12, color: "black" }}>
+                                {formatarDataBR(n.data_publicacao)}
                             </span>
-                            <p style={{ marginTop: 8 }}>{n.conteudo.slice(0, 120)}...</p>
                         </NewsCard>
                     ))}
                 </NewsGrid>
+                <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+                {noticiaSelecionada && (
+                    <>
+                        <h2 style={{ color: "white" }}>{noticiaSelecionada.titulo}</h2>
+                        <span style={{ fontSize: 12, color: "#ccc" }}>
+                            {formatarDataBR(noticiaSelecionada.data_publicacao)}
+                        </span>
+                        <div style={{ margin: "16px 0" }}>
+                            {noticiaSelecionada.temImagem && (
+                                <img
+                                    src={`http://localhost:3000/api/noticias/imagem/${noticiaSelecionada.id}`}
+                                    alt="Notícia"
+                                    style={{ width: "100%", objectFit: "cover", borderRadius: 6 }}
+                                />
+                            )}
+                        </div>
+                        <p style={{ color: "#fff", whiteSpace: "pre-line" }}>{noticiaSelecionada.conteudo}</p>
+                    </>
+                )}
+            </Modal>
             </Content>
         </Container>
     );

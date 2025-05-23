@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Form, Table, BackButton } from './styles';
 import { useState, useEffect } from 'react';
 
-export function Crud({ onNavigate }) {
+export function Crud({ onNavigate, usuario, setUsuario }) {
     const [dados, setDados] = useState([]);
     const [form, setForm] = useState({
         nome: "",
@@ -12,7 +12,8 @@ export function Crud({ onNavigate }) {
         turno_id: "",
         dataNasc: "",
         senha: "",
-        imagem: null
+        imagem: null,
+        is_admin: 0
     });
     const [editIndex, setEditIndex] = useState(null);
     const [cursos, setCursos] = useState([]);
@@ -60,9 +61,10 @@ export function Crud({ onNavigate }) {
         data.append('is_admin', form.is_admin || 0);
 
         try {
+            let editedUserId = null;
             if (editIndex !== null) {
-                const id = dados[editIndex].id;
-                await axios.put(`http://localhost:3000/api/usuario/${id}`, data, {
+                editedUserId = dados[editIndex].id;
+                await axios.put(`http://localhost:3000/api/usuario/${editedUserId}`, data, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
             } else {
@@ -73,6 +75,16 @@ export function Crud({ onNavigate }) {
             // Atualize a lista após submit
             const usuariosRes = await axios.get("http://localhost:3000/api/usuario");
             setDados(usuariosRes.data);
+
+            // Se editou o usuário logado, atualize o estado global
+            if (editedUserId && usuario && editedUserId === usuario.id) {
+                const userAtualizado = usuariosRes.data.find(u => u.id === usuario.id);
+                if (userAtualizado && setUsuario) {
+                    setUsuario(userAtualizado);
+                    localStorage.setItem("usuario", JSON.stringify(userAtualizado));
+                }
+            }
+
             setForm({
                 nome: "",
                 email: "",
@@ -84,7 +96,6 @@ export function Crud({ onNavigate }) {
                 is_admin: 0
             });
             setEditIndex(null);
-            window.location.reload();
         } catch (error) {
             console.error("Erro ao salvar usuário:", error);
         }

@@ -42,7 +42,7 @@ export const Card = styled.div`
     }
 
     @media (max-width: 480px) {
-        flex: 0 0 calc(50% - 16px);
+        flex: 0 0 calc(50% - 5px);
     }
 `;
 

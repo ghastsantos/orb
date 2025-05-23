@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-
     height: 105px;
     width: 100%;
 
@@ -18,11 +17,11 @@ export const Container = styled.header`
 
     @media (max-width: 767px) {
         height: 80px;
-        padding: 0 20px;
+        width: 243px;
 
         &.menu-open {
             width: 250px;
-            margin-left: -70px;
+            margin-left: -100px;
         }
 
     }
@@ -59,7 +58,7 @@ export const Profile = styled.div`
             user-select: none;
 
             @media (max-width: 767px) {
-                font-size: 12px; /* Reduz o tamanho do texto */
+                display:none;
             }
         }
 
@@ -69,7 +68,7 @@ export const Profile = styled.div`
             user-select: none;
 
             @media (max-width: 767px) {
-                font-size: 14px; 
+                display:none; 
             }
         }
     }
@@ -82,6 +81,10 @@ export const Logout = styled.button`
     margin-left: 32px;
     font-size: 24px;
     color: ${({ theme }) => theme.COLORS.GRAY_100};
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 
     &:hover {
         color: ${({ theme }) => theme.COLORS.ORANGE};

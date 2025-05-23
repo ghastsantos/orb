@@ -23,7 +23,7 @@ export function Header({ className, onNavigate, usuario, imgVersion }) {
                     <span>Bem-vindo</span>
                     <strong>{usuario?.nome || "Usuário"}</strong>
                 </div>
-                <Logout onClick={() => onNavigate('login')}>
+                <Logout className={className} onClick={() => onNavigate('login')}>
                     <FiLogOut />
                 </Logout>
             </Profile>

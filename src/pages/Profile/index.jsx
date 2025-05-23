@@ -8,7 +8,7 @@ import logoImg from '../../assets/logo.png';
 import axios from 'axios';
 import defaultAvatar from '../../assets/fotoperfil.png';
 
-export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
+export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada, onUsuarioAtualizado }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [nome, setNome] = useState(usuario?.nome || '');
     const [email, setEmail] = useState(usuario?.email || '');
@@ -70,13 +70,9 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
             setImagem(null);
             setRemoverFoto(false);
 
-            // Se houve troca de senha, expira a sessão e redireciona para login
-            if (novaSenha) {
-                // Opcional: faça logout no backend, se houver endpoint
-                await axios.post('http://localhost:3000/api/logout', {}, { withCredentials: true }).catch(() => {});
-                // Redireciona para login
-                onNavigate('login');
-                return; // Não continue na função
+            // Atualize o usuário global após salvar
+            if (onUsuarioAtualizado) {
+                await onUsuarioAtualizado();
             }
         } catch (err) {
             setError('Erro ao salvar perfil.');
@@ -97,10 +93,10 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
     };
 
     const fotoPerfilSrc = preview
-    ? preview
-    : removerFoto
-        ? defaultAvatar
-        : (usuario?.id ? `http://localhost:3000/api/usuario/imagem/${usuario.id}?t=${imgVersion}` : defaultAvatar);
+        ? preview
+        : removerFoto
+            ? defaultAvatar
+            : (usuario?.id ? `http://localhost:3000/api/usuario/imagem/${usuario.id}?t=${imgVersion}` : defaultAvatar);
 
     return (
         <Container>
@@ -140,10 +136,10 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada }) {
                             display: 'block'
                         }}
                         onError={e => {
-                            e.target.onerror = null; // previne loop infinito
+                            e.target.onerror = null;
                             e.target.src = defaultAvatar;
                         }}
-/>
+                    />
                     <button
                         type="button"
                         onClick={handleRemoverFoto}

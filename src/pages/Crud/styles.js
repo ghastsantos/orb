@@ -108,24 +108,24 @@ export const Table = styled.table`
 
     @media (max-width: 768px) {
         th, td {
-            font-size: 12px;
+            font-size: 10px;
             padding: 8px;
         }
 
         button {
-            font-size: 10px;
+            font-size: 8px;
             padding: 4px 8px;
         }
     }
 
     @media (max-width: 480px) {
         th, td {
-            font-size: 10px;
+            font-size: 8px;
             padding: 4px;
         }
 
         button {
-            font-size: 8px;
+            font-size: 6px;
             padding: 3px 6px;
         }
 

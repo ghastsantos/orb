@@ -10,16 +10,16 @@ import { Crud } from './pages/Crud';
 import { CrudNews } from './pages/CrudNews';
 import { NewsPage } from './pages/NewsPage';
 import { Profile } from './pages/Profile';
+import { Header } from './components/Header';
+import axios from 'axios';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login');
     const [usuario, setUsuario] = useState(null);
     const [imgVersion, setImgVersion] = useState(Date.now());
 
-    // Quando o usuário atualizar a foto:
     const handleFotoAtualizada = () => {
         setImgVersion(Date.now());
-        // Se precisar atualizar o usuário, faça aqui também
     };
 
     useEffect(() => {
@@ -31,14 +31,14 @@ function App() {
             setUsuario(JSON.parse(storedUsuario));
         }
     }, []);
-   
+
     useEffect(() => {
         if (usuario) {
-            sessionStorage.setItem('usuario', JSON.stringify(usuario));
-            sessionStorage.setItem('currentPage', currentPage);
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            localStorage.setItem('currentPage', currentPage);
         }
     }, [usuario, currentPage]);
-   
+
     const handleNavigation = (page, usuarioData = null) => {
         setCurrentPage(page);
         localStorage.setItem("currentPage", page);
@@ -49,8 +49,21 @@ function App() {
         }
 
         if (page === 'login') {
+            setUsuario(null);
             localStorage.removeItem("usuario");
             localStorage.removeItem("currentPage");
+        }
+    };
+
+    // Atualiza o usuário global após edição de perfil
+    const handleUsuarioAtualizado = async () => {
+        if (usuario?.id) {
+            const res = await axios.get(`http://localhost:3000/api/usuario`);
+            const userAtualizado = res.data.find(u => u.id === usuario.id);
+            if (userAtualizado) {
+                setUsuario(userAtualizado);
+                localStorage.setItem("usuario", JSON.stringify(userAtualizado));
+            }
         }
     };
 
@@ -58,7 +71,13 @@ function App() {
         <>
             {currentPage === 'login' && <SignIn onNavigate={handleNavigation} />}
             {currentPage === 'signup' && <SignUp onNavigate={handleNavigation} />}
-            {currentPage === 'crud' && usuario?.is_admin === 1 && <Crud onNavigate={handleNavigation}/>}
+            {currentPage === 'crud' && usuario?.is_admin === 1 && (
+                <Crud
+                    onNavigate={handleNavigation}
+                    usuario={usuario}
+                    setUsuario={setUsuario}
+                />
+            )}
             {currentPage === 'crudNews' && usuario?.is_admin === 1 && <CrudNews onNavigate={handleNavigation}/>}
             {currentPage === 'newsPage' && (
                 <NewsPage
@@ -73,6 +92,7 @@ function App() {
                     usuario={usuario}
                     imgVersion={imgVersion}
                     onFotoAtualizada={handleFotoAtualizada}
+                    onUsuarioAtualizado={handleUsuarioAtualizado}
                 />
             )}
             {currentPage === 'home' && (

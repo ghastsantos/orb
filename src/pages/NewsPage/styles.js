@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     height: 100vh;
-    overflow: hidden;
     display: grid;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
     transition: all 0.3s ease-in-out;
@@ -11,12 +10,12 @@ export const Container = styled.div`
     &.menu-open {
         grid-template-columns: 250px auto;
         grid-template-areas:
-            'brand brand'
+            'brand header'
             'menu content';
 
         @media (max-width: 767px) {
             grid-template-areas:
-            'brand brand'
+            'brand header'
             'menu menu';
         }
     }
@@ -25,7 +24,7 @@ export const Container = styled.div`
         grid-template-columns: auto;
         grid-template-rows: 105px auto 0px;
         grid-template-areas:
-            'brand brand'
+            'brand header'
             'content content';
     }
 `;
@@ -118,11 +117,17 @@ export const Content = styled.div`
     grid-area: content;
     padding: 0 64px;
     overflow-y: auto;
-    transition: padding-bottom 0.3s ease-in-out;
     position: relative;
-    right: 30%;
+
+    &.menu-open {
+        padding-top: 140px;
+    }
 
     @media (max-width: 767px) {
+        right: 43%;
+        top: 15%;
+        width: 330px;
+
         &.menu-open {
             display: none;
         }
@@ -150,6 +155,16 @@ export const FilterBar = styled.div`
     }
 `;
 
+export const FilterRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+`;
+
 export const NewsGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -157,6 +172,7 @@ export const NewsGrid = styled.div`
 
     @media (max-width: 767px) {
         grid-template-columns: 1fr; 
+        width: 243px;
     }
 `;
 
@@ -190,6 +206,12 @@ export const NewsCard = styled.div`
 
     > p {
         margin-top: 8px;
+        max-height: 48px; /* Limita a altura do texto */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limita a 2 linhas */
+        -webkit-box-orient: vertical;
     }
 `;
 

@@ -12,6 +12,10 @@ import { NewsPage } from './pages/NewsPage';
 import { Profile } from './pages/Profile';
 import { Header } from './components/Header';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login');
@@ -54,6 +58,47 @@ function App() {
             localStorage.removeItem("currentPage");
         }
     };
+
+   useEffect(() => {
+    let timeout;
+
+   const logout = () => {
+    MySwal.fire({
+        title: 'Você está inativo!',
+        text: 'Deseja continuar logado?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, continuar',
+        cancelButtonText: 'Sair',
+        reverseButtons: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            resetTimer(); // reinicia o tempo se ele quiser continuar
+        } else {
+            handleNavigation('login'); // desloga se não quiser continuar
+        }
+    });
+};
+
+    const resetTimer = () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(logout, 10 * 60 * 1000); // ← 10 minutos
+    };
+
+    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+
+    if (usuario) {
+        events.forEach(event => window.addEventListener(event, resetTimer));
+        resetTimer();
+    }
+
+    return () => {
+        events.forEach(event => window.removeEventListener(event, resetTimer));
+        clearTimeout(timeout);
+    };
+}, [usuario]);
 
     // Atualiza o usuário global após edição de perfil
     const handleUsuarioAtualizado = async () => {
@@ -110,7 +155,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
             <GlobalStyles />
-            <App />
+            <App/>
         </ThemeProvider>
     </React.StrictMode>
 );
+

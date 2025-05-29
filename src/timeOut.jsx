@@ -12,7 +12,7 @@ const AutoLogout = () => {
 
   const resetTimer = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(logout, 10 * 60 * 1000); // 10 minutos
+    timeoutRef.current = setTimeout(logout, 1 * 60 * 1000); // 10 minutos
   };
 
   useEffect(() => {

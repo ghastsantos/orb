@@ -118,9 +118,9 @@ export const Menu = styled.ul`
 export const Content = styled.div`
     grid-area: content;
     padding: 0 64px;
-    overflow-y: auto;
     position: relative;
-    right: 30%;
+    top: 10%;
+    right: 5%;
 
     @media (max-width: 767px) {
         right: 43%;

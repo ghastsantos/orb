@@ -9,6 +9,8 @@ import { Home } from './pages/Home';
 import { Crud } from './pages/Crud';
 import { CrudNews } from './pages/CrudNews';
 import { NewsPage } from './pages/NewsPage';
+import { CrudEvents } from './pages/CrudEvents';
+import { EventsPage } from './pages/EventsPage';
 import { Profile } from './pages/Profile';
 import { Header } from './components/Header';
 import axios from 'axios';
@@ -126,6 +128,14 @@ function App() {
             {currentPage === 'crudNews' && usuario?.is_admin === 1 && <CrudNews onNavigate={handleNavigation}/>}
             {currentPage === 'newsPage' && (
                 <NewsPage
+                    onNavigate={handleNavigation}
+                    usuario={usuario}
+                    imgVersion={imgVersion}
+                />
+            )}
+            {currentPage === 'crudEvents' && usuario?.is_admin === 1 && <CrudEvents onNavigate={handleNavigation}/>}
+            {currentPage === 'eventsPage' && (
+                <EventsPage
                     onNavigate={handleNavigation}
                     usuario={usuario}
                     imgVersion={imgVersion}

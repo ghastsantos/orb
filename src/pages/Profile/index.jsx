@@ -109,14 +109,15 @@ export function Profile({ onNavigate, usuario, imgVersion, onFotoAtualizada, onU
             <Menu className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
                 <li><ButtonText title="Home" icon={FiHome} onClick={() => onNavigate('home')} /></li>
                 <li><ButtonText title="Notícias" icon={FiInfo} onClick={() => onNavigate('newsPage')} /></li>
-                <li><ButtonText title="Eventos" icon={FiSmile} /></li>
+                <li><ButtonText title="Eventos" icon={FiSmile} onClick={() => onNavigate('eventsPage')} /></li>
                 <li><ButtonText title="Chats" icon={FiMessageSquare} /></li>
                 <li><ButtonText title="Perfil" icon={FiUser} isActive onClick={() => onNavigate('profile')} /></li>
                 <li><ButtonText title="Notificações" icon={FiBell} /></li>
                 {usuario?.is_admin === 1 && (
                     <>
-                        <li><ButtonText title="Crud" onClick={() => onNavigate('crud')} /></li>
+                        <li><ButtonText title="Crud de Usuários" onClick={() => onNavigate('crud')} /></li>
                         <li><ButtonText title="Crud de Notícias" onClick={() => onNavigate('crudNews')} /></li>
+                        <li><ButtonText title="Crud de Eventos" onClick={() => onNavigate('crudEvents')} /></li>
                     </>
                 )}
                 <li><ButtonText title="Sair" icon={FiLogOut} onClick={() => onNavigate('login')} /></li>
